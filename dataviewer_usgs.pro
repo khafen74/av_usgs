@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui network
+QT       += core gui network sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -14,9 +14,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    downloadmanager.cpp
+    downloadmanager.cpp \
+    urlgenerator.cpp
 
 HEADERS  += mainwindow.h \
-    downloadmanger.h
+    downloadmanger.h \
+    urlgenerator.h
 
 FORMS    += mainwindow.ui
