@@ -114,22 +114,19 @@ void MainWindow::on_btn_refresh_clicked()
     ui->tableView->setColumnWidth(1, 300);
 }
 
-
-void MainWindow::on_btn_select_clicked()
-{
-    qDebug()<<"table clicked";
-    QModelIndex index = ui->tableView->selectionModel()->currentIndex();
-    int row = index.row();
-    QString siteno = index.sibling(row, 0).data().toString();
-    QString sitename = index.sibling(row, 1).data().toString();
-    qDebug()<<siteno<<sitename;
-}
-
 void MainWindow::on_tableView_clicked(const QModelIndex &index)
 {
-    qDebug()<<"table clicked";
     int row = index.row();
     QString siteno = index.sibling(row, 0).data().toString();
     QString sitename = index.sibling(row, 1).data().toString();
-    qDebug()<<siteno<<sitename;
+}
+
+void MainWindow::on_btn_load_clicked()
+{
+    
+}
+
+void MainWindow::on_btn_select_2_clicked()
+{
+    
 }

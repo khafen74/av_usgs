@@ -15,10 +15,18 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     downloadmanager.cpp \
-    urlgenerator.cpp
+    urlgenerator.cpp \
+    qcustomplot.cpp \
+    dialogloaddata.cpp \
+    dialogselectdata.cpp
 
 HEADERS  += mainwindow.h \
     downloadmanger.h \
-    urlgenerator.h
+    urlgenerator.h \
+    qcustomplot.h \
+    dialogloaddata.h \
+    dialogselectdata.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    dialogloaddata.ui \
+    dialogselectdata.ui
