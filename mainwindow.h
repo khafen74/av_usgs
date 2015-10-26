@@ -20,9 +20,11 @@ public:
 private slots:
     void on_btn_refresh_clicked();
 
-    void on_btn_select_clicked();
-
     void on_tableView_clicked(const QModelIndex &index);
+
+    void on_btn_load_clicked();
+
+    void on_btn_select_2_clicked();
 
 private:
     Ui::MainWindow *ui;
