@@ -17,16 +17,21 @@ SOURCES += main.cpp\
     downloadmanager.cpp \
     urlgenerator.cpp \
     qcustomplot.cpp \
-    dialogloaddata.cpp \
-    dialogselectdata.cpp
+    dialog_loaddata.cpp \
+    dialog_selectdata.cpp \
+    dialog_loadsites.cpp
 
 HEADERS  += mainwindow.h \
     downloadmanger.h \
     urlgenerator.h \
     qcustomplot.h \
-    dialogloaddata.h \
-    dialogselectdata.h
+    dialog_loaddata.h \
+    dialog_selectdata.h \
+    dialog_loadsites.h
 
 FORMS    += mainwindow.ui \
     dialogloaddata.ui \
-    dialogselectdata.ui
+    dialogselectdata.ui \
+    dialog_loaddata.ui \
+    dialog_selectdata.ui \
+    dialog_loadsites.ui

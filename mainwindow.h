@@ -2,6 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QtGui>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QtCore>
 #include <QtSql>
 #include <iostream>
 
@@ -26,9 +30,18 @@ private slots:
 
     void on_btn_select_2_clicked();
 
+    void on_actionCreate_New_DB_triggered();
+
+    void on_actionConnect_to_Existing_DB_triggered();
+
 private:
     Ui::MainWindow *ui;
-    QSqlDatabase mydb;
+    QSqlDatabase m_db;
+    QString m_qsDbPath, m_qsBaseDir;
+
+    void setBaseDir(QString path);
+    void setDbPath(QString path);
+    void openDB();
 };
 
 #endif // MAINWINDOW_H
