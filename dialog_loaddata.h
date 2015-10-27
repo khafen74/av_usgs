@@ -2,6 +2,7 @@
 #define DIALOG_LOADDATA_H
 
 #include <QDialog>
+#include "dialog_loadsites.h"
 
 namespace Ui {
 class dialog_LoadData;
@@ -14,6 +15,15 @@ class dialog_LoadData : public QDialog
 public:
     explicit dialog_LoadData(QWidget *parent = 0);
     ~dialog_LoadData();
+
+private slots:
+    void on_btn_loadSites_clicked();
+
+    void on_btn_add_clicked();
+
+    void on_btn_ok_clicked();
+
+    void on_btn_close_clicked();
 
 private:
     Ui::dialog_LoadData *ui;

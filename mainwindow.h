@@ -9,6 +9,7 @@
 #include <QtSql>
 #include <iostream>
 #include "querymanager.h"
+#include "dialog_loaddata.h"
 
 namespace Ui {
 class MainWindow;
@@ -29,11 +30,11 @@ private slots:
 
     void on_btn_load_clicked();
 
-    void on_btn_select_2_clicked();
-
     void on_actionCreate_New_DB_triggered();
 
     void on_actionConnect_to_Existing_DB_triggered();
+
+    void on_btn_select_clicked();
 
 private:
     Ui::MainWindow *ui;

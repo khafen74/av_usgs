@@ -104,11 +104,11 @@ void MainWindow::on_btn_refresh_clicked()
 
     QSqlQuery *query = new QSqlQuery(m_db);
 
-    query->prepare("select siteno, sitename from sites");
+    query->prepare("select statename from states");
     query->exec();
     model->setQuery(*query);
-    model->setHeaderData(0, Qt::Horizontal, QObject::tr("Site Number"));
-    model->setHeaderData(1, Qt::Horizontal, QObject::tr("Site Name"));
+//    model->setHeaderData(0, Qt::Horizontal, QObject::tr("Site Number"));
+//    model->setHeaderData(1, Qt::Horizontal, QObject::tr("Site Name"));
 
     ui->tableView->setModel(model);
     ui->tableView->setColumnWidth(1, 300);
@@ -123,12 +123,9 @@ void MainWindow::on_tableView_clicked(const QModelIndex &index)
 
 void MainWindow::on_btn_load_clicked()
 {
-
-}
-
-void MainWindow::on_btn_select_2_clicked()
-{
-
+    dialog_LoadData dialog(this);
+    dialog.setModal(true);
+    dialog.exec();
 }
 
 void MainWindow::on_actionCreate_New_DB_triggered()
@@ -190,4 +187,9 @@ void MainWindow::openDB()
         m_QueryManager.CreateAllTables();
         m_QueryManager.loadStateData();
     }
+}
+
+void MainWindow::on_btn_select_clicked()
+{
+
 }

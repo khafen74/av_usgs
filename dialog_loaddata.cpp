@@ -12,3 +12,25 @@ dialog_LoadData::~dialog_LoadData()
 {
     delete ui;
 }
+
+void dialog_LoadData::on_btn_loadSites_clicked()
+{
+    dialog_LoadSites dialog(this);
+    dialog.setModal(true);
+    dialog.exec();
+}
+
+void dialog_LoadData::on_btn_add_clicked()
+{
+
+}
+
+void dialog_LoadData::on_btn_ok_clicked()
+{
+    this->close();
+}
+
+void dialog_LoadData::on_btn_close_clicked()
+{
+    this->close();
+}

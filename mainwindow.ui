@@ -50,7 +50,7 @@
      <string>Load Data</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btn_select_2">
+   <widget class="QPushButton" name="btn_select">
     <property name="geometry">
      <rect>
       <x>270</x>
