@@ -185,4 +185,9 @@ void MainWindow::openDB()
     {
         QMessageBox::information(this, "Error", "Problem opening database");
     }
+    else
+    {
+        m_QueryManager.CreateAllTables();
+        m_QueryManager.loadStateData();
+    }
 }

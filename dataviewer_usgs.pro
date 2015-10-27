@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     qcustomplot.cpp \
     dialog_loaddata.cpp \
     dialog_selectdata.cpp \
-    dialog_loadsites.cpp
+    dialog_loadsites.cpp \
+    querymanager.cpp
 
 HEADERS  += mainwindow.h \
     downloadmanger.h \
@@ -27,7 +28,8 @@ HEADERS  += mainwindow.h \
     qcustomplot.h \
     dialog_loaddata.h \
     dialog_selectdata.h \
-    dialog_loadsites.h
+    dialog_loadsites.h \
+    querymanager.h
 
 FORMS    += mainwindow.ui \
     dialogloaddata.ui \

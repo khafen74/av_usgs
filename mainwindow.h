@@ -8,6 +8,7 @@
 #include <QtCore>
 #include <QtSql>
 #include <iostream>
+#include "querymanager.h"
 
 namespace Ui {
 class MainWindow;
@@ -38,6 +39,7 @@ private:
     Ui::MainWindow *ui;
     QSqlDatabase m_db;
     QString m_qsDbPath, m_qsBaseDir;
+    QueryManager m_QueryManager;
 
     void setBaseDir(QString path);
     void setDbPath(QString path);
