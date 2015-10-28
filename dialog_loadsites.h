@@ -2,6 +2,7 @@
 #define DIALOG_LOADSITES_H
 
 #include <QDialog>
+#include <QtGui>
 #include <QtSql>
 
 namespace Ui {
@@ -20,6 +21,8 @@ private slots:
     void on_btn_ok_clicked();
 
     void on_btn_close_clicked();
+
+    void on_btn_add_clicked();
 
 private:
     Ui::dialog_LoadSites *ui;
