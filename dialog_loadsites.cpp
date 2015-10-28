@@ -1,12 +1,12 @@
 #include "dialog_loadsites.h"
 #include "ui_dialog_loadsites.h"
 
-dialog_LoadSites::dialog_LoadSites(QWidget *parent) :
+dialog_LoadSites::dialog_LoadSites(QString baseDir, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::dialog_LoadSites)
 {
     ui->setupUi(this);
-    initialize();
+    initialize(baseDir);
 }
 
 dialog_LoadSites::~dialog_LoadSites()
@@ -16,6 +16,22 @@ dialog_LoadSites::~dialog_LoadSites()
 
 void dialog_LoadSites::on_btn_ok_clicked()
 {
+    QStringList urls;
+    UrlGenerator UrlGen;
+
+    qDebug()<<ui->list_add->count();
+    for (int i=0; i<ui->list_add->count(); i++)
+    {
+        QListWidgetItem *item = ui->list_add->item(i);
+        qDebug()<<item->text();
+        urls.append(UrlGen.stateSites(item->text()));
+    }
+    DownloadManager *manager = new DownloadManager();
+    manager->setBasePath(m_qsBaseDir);
+    manager->execute(urls);
+
+    ui->list_add->clear();
+
     this->close();
 }
 
@@ -24,8 +40,10 @@ void dialog_LoadSites::on_btn_close_clicked()
     this->close();
 }
 
-void dialog_LoadSites::initialize()
+void dialog_LoadSites::initialize(QString baseDir)
 {
+    m_qsBaseDir = baseDir;
+
     QSqlQueryModel *model = new QSqlQueryModel();
 
     QSqlQuery query;

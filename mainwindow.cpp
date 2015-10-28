@@ -124,7 +124,7 @@ void MainWindow::on_tableView_clicked(const QModelIndex &index)
 
 void MainWindow::on_btn_load_clicked()
 {
-    dialog_LoadData dialog(this);
+    dialog_LoadData dialog(m_qsBaseDir, this);
     dialog.setModal(true);
     dialog.exec();
 }

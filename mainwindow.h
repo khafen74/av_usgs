@@ -39,7 +39,8 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QSqlDatabase m_db;
-    QString m_qsDbPath, m_qsBaseDir;
+    QString m_qsDbPath;
+    QString m_qsBaseDir;
     QueryManager m_QueryManager;
 
     void setBaseDir(QString path);

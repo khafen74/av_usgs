@@ -5,6 +5,11 @@ QueryManager::QueryManager()
 
 }
 
+QueryManager::~QueryManager()
+{
+
+}
+
 void QueryManager::CreateAllTables()
 {
     CreateStatesTable();

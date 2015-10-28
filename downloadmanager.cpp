@@ -46,6 +46,21 @@ DownloadManager::DownloadManager()
             SLOT(downloadFinished(QNetworkReply*)));
 }
 
+DownloadManager::DownloadManager(QString basePath)
+{
+    connect(&manager, SIGNAL(finished(QNetworkReply*)),
+            SLOT(downloadFinished(QNetworkReply*)));
+    setBasePath(basePath);
+}
+
+DownloadManager::DownloadManager(QString basePath, QStringList urls)
+{
+    connect(&manager, SIGNAL(finished(QNetworkReply*)),
+            SLOT(downloadFinished(QNetworkReply*)));
+    setBasePath(basePath);
+    execute(urls);
+}
+
 void DownloadManager::doDownload(const QUrl &url)
 {
     QNetworkRequest request(url);
@@ -60,8 +75,10 @@ void DownloadManager::doDownload(const QUrl &url)
 
 QString DownloadManager::saveFileName(const QUrl &url)
 {
-    QString path = url.path();
-    QString basename = QFileInfo(path).fileName();
+    qDebug()<<"save file name";
+    QString path = m_qsBasePath;
+    QString basename = path + QFileInfo(path).fileName();
+    qDebug()<<basename;
 
     if (basename.isEmpty())
         basename = "download";
@@ -69,19 +86,20 @@ QString DownloadManager::saveFileName(const QUrl &url)
     if (QFile::exists(basename)) {
         // already exists, don't overwrite
         int i = 0;
-        basename += '.';
         while (QFile::exists(basename + QString::number(i)))
             ++i;
 
         basename += QString::number(i);
     }
 
-    return basename;
+    return basename+".qtd";
 }
 
 bool DownloadManager::saveToDisk(const QString &filename, QIODevice *data)
 {
+    qDebug()<<"save to disk";
     QFile file(filename);
+    qDebug()<<filename;
     if (!file.open(QIODevice::WriteOnly)) {
         fprintf(stderr, "Could not open %s for writing: %s\n",
                 qPrintable(filename),
@@ -95,26 +113,27 @@ bool DownloadManager::saveToDisk(const QString &filename, QIODevice *data)
     return true;
 }
 
-void DownloadManager::execute()
+void DownloadManager::setBasePath(QString path)
 {
-    QStringList args = QCoreApplication::instance()->arguments();
-    args.takeFirst();           // skip the first argument, which is the program's name
-    args.append("http://www.neng.usu.edu/cee/faculty/dtarb/giswr/2015/Ex12015.pdf");
-    if (args.isEmpty()) {
-        printf("Qt Download example - downloads all URLs in parallel\n"
-               "Usage: download url1 [url2... urlN]\n"
-               "\n"
-               "Downloads the URLs passed in the command-line to the local directory\n"
-               "If the target file already exists, a .0, .1, .2, etc. is appended to\n"
-               "differentiate.\n");
-        QCoreApplication::instance()->quit();
+    m_qsBasePath = path + "/";
+}
+
+void DownloadManager::execute(QStringList urls)
+{
+    QStringList args = urls;
+
+    if (args.isEmpty())
+    {
+        //error
         return;
     }
 
-    foreach (QString arg, args) {
+    foreach (QString arg, args)
+    {
         QUrl url = QUrl::fromEncoded(arg.toLocal8Bit());
         doDownload(url);
     }
+    qDebug()<<"done execute";
 }
 
 void DownloadManager::sslErrors(const QList<QSslError> &sslErrors)
@@ -129,6 +148,7 @@ void DownloadManager::sslErrors(const QList<QSslError> &sslErrors)
 
 void DownloadManager::downloadFinished(QNetworkReply *reply)
 {
+    qDebug()<<"download finished";
     QUrl url = reply->url();
     if (reply->error()) {
         fprintf(stderr, "Download of %s failed: %s\n",
@@ -145,8 +165,13 @@ void DownloadManager::downloadFinished(QNetworkReply *reply)
     reply->deleteLater();
 
     if (currentDownloads.isEmpty())
+    {
         // all downloads finished
-        QCoreApplication::instance()->quit();
+        //QCoreApplication::instance()->quit();
+        qDebug()<<"download manager finished";
+        this->deleteLater();
+    }
+
 }
 
 //#include "downloadmg.moc"

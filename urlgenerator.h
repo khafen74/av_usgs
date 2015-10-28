@@ -12,7 +12,7 @@ public:
     UrlGenerator();
 
     void initialize();
-    QUrl stateSites(QString state);
+    QString stateSites(QString state);
 
 private:
     QString m_qsUrlBase;

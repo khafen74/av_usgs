@@ -70,14 +70,20 @@ class DownloadManager: public QObject
 
 public:
     DownloadManager();
+    DownloadManager(QString basePath);
+    DownloadManager(QString basePath, QStringList urls);
     void doDownload(const QUrl &url);
     QString saveFileName(const QUrl &url);
     bool saveToDisk(const QString &filename, QIODevice *data);
+    void setBasePath(QString path);
 
 public slots:
-    void execute();
+    void execute(QStringList urls);
     void downloadFinished(QNetworkReply *reply);
     void sslErrors(const QList<QSslError> &errors);
+
+private:
+    QString m_qsBasePath;
 };
 
 

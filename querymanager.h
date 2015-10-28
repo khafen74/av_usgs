@@ -20,6 +20,7 @@ class QueryManager
 {
 public:
     QueryManager();
+    ~QueryManager();
 
     void CreateAllTables();
     void CreateSitesTable();

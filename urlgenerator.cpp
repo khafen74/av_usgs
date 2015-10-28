@@ -13,7 +13,7 @@ void UrlGenerator::initialize()
     m_qsDataType = "iv,dv";
 }
 
-QUrl UrlGenerator::stateSites(QString state)
+QString UrlGenerator::stateSites(QString state)
 {
     QString qsUrl;
     QString abrv = QueryManager::getStateAbbrev(state).toLower();
@@ -21,7 +21,6 @@ QUrl UrlGenerator::stateSites(QString state)
     qsUrl = m_qsUrlBase + "site/?format=" + m_qsFormat + "&stateCd=" +
             abrv + "&siteType=" + m_qsSiteType + "&hasDataTypeCd=" + m_qsDataType;
 
-    QUrl url(qsUrl);
-    return url;
+    return qsUrl;
 }
 
