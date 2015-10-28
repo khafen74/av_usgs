@@ -48,11 +48,18 @@ void dialog_LoadSites::on_btn_add_clicked()
         QModelIndex index = select.at(i);
         int row = index.row();
         QString state = index.sibling(row, 0).data().toString();
-        qDebug()<<state;
-        ui->list_add->insertItem(ui->list_add->currentRow(), state);
+        int newRow = ui->list_add->row(ui->list_add->currentItem());
+        ui->list_add->insertItem(newRow, state);
     }
+    ui->list_add->sortItems(Qt::AscendingOrder);
+}
 
-//    int row = index.row();
-//    QString siteno = index.sibling(row, 0).data().toString();
-//    QString sitename = index.sibling(row, 1).data().toString();
+void dialog_LoadSites::on_btn_remove_clicked()
+{
+    QList<QListWidgetItem*> items = ui->list_add->selectedItems();
+
+    for (int i=0; i<items.length(); i++)
+    {
+        ui->list_add->takeItem(ui->list_add->row(items[i]));
+    }
 }

@@ -42,16 +42,6 @@ void QueryManager::CreateValuesTable()
 
 void QueryManager::loadStateData()
 {
-    QList<QString> stateNames;
-    stateNames << "Alabama" << "Alaska" << "Arizona" << "Arkansas" << "California" << "Colorado" << "Connecticut"
-                              << "Delaware" << "District Of Columbia" << "Florida" << "Georgia" << "Hawaii" << "Idaho" << "Illinois"
-                              << "Indiana" << "Iowa" << "Kansas" << "Kentucky" << "Louisiana" << "Maine" << "Maryland" << "Massachusetts"
-                              << "Michigan" << "Minnesota" << "Mississippi" << "Missouri" << "Montana" << "Nebraska" << "Nevada"
-                              << "New Hampshire" << "New Jersey" << "New Mexico" << "New York" << "North Carolina" << "North Dakota"
-                              << "Ohio" << "Oklahoma" << "Oregon" << "Pennsylvania" << "Rhode Island" << "South Carolina"
-                              << "South Dakota" << "Tennessee" << "Texas" << "Utah" << "Vermont" << "Virginia"
-                              << "Washington" << "West Virginia" << "Wisconsin" << "Wyoming";
-
     QSqlQuery qry;
 
     for (int i=0; i<stateNames.length(); i++)
@@ -62,6 +52,25 @@ void QueryManager::loadStateData()
 
         qry.addBindValue(stateNames[i]);
         qry.exec();
+    }
+}
+
+QString QueryManager::getStateAbbrev(QString stateName)
+{
+    bool exists = false;
+
+    for (int i=0; i<stateNames.length(); i++)
+    {
+        if (QString::compare(stateName, stateNames[i], Qt::CaseInsensitive))
+        {
+            exists = true;
+            return stateAbbrevs[i];
+        }
+    }
+
+    if (!exists)
+    {
+        //error
     }
 }
 
