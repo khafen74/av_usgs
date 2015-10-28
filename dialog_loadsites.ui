@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>512</width>
+    <width>527</width>
     <height>542</height>
    </rect>
   </property>
@@ -49,16 +49,6 @@
     </rect>
    </property>
   </widget>
-  <widget class="QTableView" name="tv_add">
-   <property name="geometry">
-    <rect>
-     <x>270</x>
-     <y>20</y>
-     <width>211</width>
-     <height>381</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QPushButton" name="btn_add">
    <property name="geometry">
     <rect>
@@ -75,7 +65,7 @@
   <widget class="QPushButton" name="btn_remove">
    <property name="geometry">
     <rect>
-     <x>270</x>
+     <x>260</x>
      <y>410</y>
      <width>75</width>
      <height>23</height>
@@ -83,6 +73,16 @@
    </property>
    <property name="text">
     <string>Remove</string>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="list_add">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>20</y>
+     <width>231</width>
+     <height>381</height>
+    </rect>
    </property>
   </widget>
  </widget>
