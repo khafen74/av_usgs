@@ -75,22 +75,22 @@ void DownloadManager::doDownload(const QUrl &url)
 
 QString DownloadManager::saveFileName(const QUrl &url)
 {
-    QString path = m_qsBasePath;
-    QString basename = path + QFileInfo(path).fileName();
+    QString dir = m_qsBasePath;
+    QString ext = ".qtd";
+    QString basename = "site";
+    QString filename = dir + basename + ext;
 
-    if (basename.isEmpty())
-        basename = "download";
-
-    if (QFile::exists(basename)) {
+    if (QFile::exists(filename)) {
         // already exists, don't overwrite
         int i = 0;
-        while (QFile::exists(basename + QString::number(i)))
-            ++i;
-
-        basename += QString::number(i);
+        while (QFile::exists(filename))
+        {
+            filename = dir + basename + QString::number(i) + ext;
+            i++;
+        }
     }
 
-    return basename+".qtd";
+    return filename;
 }
 
 bool DownloadManager::saveToDisk(const QString &filename, QIODevice *data)

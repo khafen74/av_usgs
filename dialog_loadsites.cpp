@@ -18,15 +18,17 @@ void dialog_LoadSites::on_btn_ok_clicked()
 {
     QStringList urls;
     UrlGenerator UrlGen;
+    m_statenames.clear();
 
     qDebug()<<ui->list_add->count();
     for (int i=0; i<ui->list_add->count(); i++)
     {
         QListWidgetItem *item = ui->list_add->item(i);
         m_statenames.append(item->text());
-        urls.append(UrlGen.stateSites(item->text()));
+        qDebug()<<m_statenames[i];
+        urls.append(UrlGen.stateSites(m_statenames[i]));
+        qDebug()<<urls[i];
     }
-    //DownloadManager *manager = new DownloadManager();
     dlmanage = new DownloadManager();
     connect(dlmanage, SIGNAL(done()), SLOT(loadSiteData()));
     dlmanage->setBasePath(m_qsBaseDir);

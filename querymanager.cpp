@@ -107,8 +107,7 @@ void QueryManager::loadSite(QStringList list, QString state)
     qry.addBindValue(list[10]);
     qry.addBindValue(list[11].toInt());
     qry.addBindValue(stateNames.indexOf(state)+1);
-    bool work = qry.exec();
-    qDebug()<<work<<"sites insert done";
+    qry.exec();
 }
 
 void QueryManager::loadStates()
@@ -128,7 +127,6 @@ void QueryManager::loadStates()
 
 void QueryManager::readSitesFile(QString filename, QString state)
 {
-    qDebug()<<"in read file"<<filename<<state;
     QFile inFile(filename);
     if (inFile.open(QIODevice::ReadOnly|QIODevice::Text))
     {
@@ -142,7 +140,6 @@ void QueryManager::readSitesFile(QString filename, QString state)
             list = line.split("\t");
             if (!QString::compare(list[0], "USGS", Qt::CaseInsensitive))
             {
-                qDebug()<<"loading site"<<line;
                 loadSite(list, state);
             }
         }
@@ -161,8 +158,9 @@ QString QueryManager::getStateAbbrev(QString stateName)
 
     for (int i=0; i<stateNames.length(); i++)
     {
-        if (QString::compare(stateName, stateNames[i], Qt::CaseInsensitive))
+        if (!QString::compare(stateName, stateNames[i], Qt::CaseInsensitive))
         {
+            qDebug()<<stateName<<stateAbbrevs[i]<<stateNames[i]<<i;
             exists = true;
             return stateAbbrevs[i];
         }
