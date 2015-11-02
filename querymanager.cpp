@@ -160,7 +160,6 @@ QString QueryManager::getStateAbbrev(QString stateName)
     {
         if (!QString::compare(stateName, stateNames[i], Qt::CaseInsensitive))
         {
-            qDebug()<<stateName<<stateAbbrevs[i]<<stateNames[i]<<i;
             exists = true;
             return stateAbbrevs[i];
         }
