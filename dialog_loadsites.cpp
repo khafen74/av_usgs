@@ -23,16 +23,14 @@ void dialog_LoadSites::on_btn_ok_clicked()
     for (int i=0; i<ui->list_add->count(); i++)
     {
         QListWidgetItem *item = ui->list_add->item(i);
-        qDebug()<<item->text();
+        m_statenames.append(item->text());
         urls.append(UrlGen.stateSites(item->text()));
     }
-    DownloadManager *manager = new DownloadManager();
-    manager->setBasePath(m_qsBaseDir);
-    manager->execute(urls);
-
-    ui->list_add->clear();
-
-    this->close();
+    //DownloadManager *manager = new DownloadManager();
+    dlmanage = new DownloadManager();
+    connect(dlmanage, SIGNAL(done()), SLOT(loadSiteData()));
+    dlmanage->setBasePath(m_qsBaseDir);
+    dlmanage->execute(urls);
 }
 
 void dialog_LoadSites::on_btn_close_clicked()
@@ -80,4 +78,22 @@ void dialog_LoadSites::on_btn_remove_clicked()
     {
         ui->list_add->takeItem(ui->list_add->row(items[i]));
     }
+}
+
+void dialog_LoadSites::loadSiteData()
+{
+    qDebug()<<"loading site data";
+    QueryManager QryManage;
+    m_filenames = dlmanage->getFilenames();
+    qDebug()<<"files"<<m_filenames.length();
+
+    for (int i=0; i<m_filenames.length(); i++)
+    {
+        qDebug()<<"looping file names"<<m_filenames[i];
+        QryManage.readSitesFile(m_filenames[i], m_statenames[i]);
+    }
+
+    ui->list_add->clear();
+
+    this->close();
 }

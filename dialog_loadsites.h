@@ -30,10 +30,15 @@ private slots:
 
     void on_btn_remove_clicked();
 
+    void loadSiteData();
+
 private:
     Ui::dialog_LoadSites *ui;
 
     QString m_qsBaseDir;
+    QStringList m_filenames;
+    QStringList m_statenames;
+    DownloadManager *dlmanage;
 };
 
 #endif // DIALOG_LOADSITES_H

@@ -58,7 +58,7 @@ DownloadManager::DownloadManager(QString basePath, QStringList urls)
     connect(&manager, SIGNAL(finished(QNetworkReply*)),
             SLOT(downloadFinished(QNetworkReply*)));
     setBasePath(basePath);
-    execute(urls);
+    //execute(urls);
 }
 
 void DownloadManager::doDownload(const QUrl &url)
@@ -75,10 +75,8 @@ void DownloadManager::doDownload(const QUrl &url)
 
 QString DownloadManager::saveFileName(const QUrl &url)
 {
-    qDebug()<<"save file name";
     QString path = m_qsBasePath;
     QString basename = path + QFileInfo(path).fileName();
-    qDebug()<<basename;
 
     if (basename.isEmpty())
         basename = "download";
@@ -97,9 +95,7 @@ QString DownloadManager::saveFileName(const QUrl &url)
 
 bool DownloadManager::saveToDisk(const QString &filename, QIODevice *data)
 {
-    qDebug()<<"save to disk";
     QFile file(filename);
-    qDebug()<<filename;
     if (!file.open(QIODevice::WriteOnly)) {
         fprintf(stderr, "Could not open %s for writing: %s\n",
                 qPrintable(filename),
@@ -109,6 +105,7 @@ bool DownloadManager::saveToDisk(const QString &filename, QIODevice *data)
 
     file.write(data->readAll());
     file.close();
+    filenames.append(filename);
 
     return true;
 }
@@ -118,14 +115,19 @@ void DownloadManager::setBasePath(QString path)
     m_qsBasePath = path + "/";
 }
 
+QStringList DownloadManager::getFilenames()
+{
+    return filenames;
+}
+
 void DownloadManager::execute(QStringList urls)
 {
+    filenames.clear();
     QStringList args = urls;
 
     if (args.isEmpty())
     {
         //error
-        return;
     }
 
     foreach (QString arg, args)
@@ -133,7 +135,7 @@ void DownloadManager::execute(QStringList urls)
         QUrl url = QUrl::fromEncoded(arg.toLocal8Bit());
         doDownload(url);
     }
-    qDebug()<<"done execute";
+
 }
 
 void DownloadManager::sslErrors(const QList<QSslError> &sslErrors)
@@ -148,17 +150,19 @@ void DownloadManager::sslErrors(const QList<QSslError> &sslErrors)
 
 void DownloadManager::downloadFinished(QNetworkReply *reply)
 {
-    qDebug()<<"download finished";
     QUrl url = reply->url();
-    if (reply->error()) {
-        fprintf(stderr, "Download of %s failed: %s\n",
-                url.toEncoded().constData(),
-                qPrintable(reply->errorString()));
-    } else {
+    if (reply->error())
+    {
+        //error
+    }
+    else
+    {
         QString filename = saveFileName(url);
         if (saveToDisk(filename, reply))
-            printf("Download of %s succeeded (saved to %s)\n",
-                   url.toEncoded().constData(), qPrintable(filename));
+        {
+            //save successful
+        }
+
     }
 
     currentDownloads.removeAll(reply);
@@ -167,8 +171,8 @@ void DownloadManager::downloadFinished(QNetworkReply *reply)
     if (currentDownloads.isEmpty())
     {
         // all downloads finished
-        //QCoreApplication::instance()->quit();
-        qDebug()<<"download manager finished";
+        emit done();
+        qDebug()<<"done signal emitted";
         this->deleteLater();
     }
 

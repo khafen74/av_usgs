@@ -186,7 +186,7 @@ void MainWindow::openDB()
     else
     {
         m_QueryManager.CreateAllTables();
-        m_QueryManager.loadStateData();
+        m_QueryManager.loadStates();
     }
 }
 

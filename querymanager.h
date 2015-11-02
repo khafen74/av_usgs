@@ -23,10 +23,12 @@ public:
     ~QueryManager();
 
     void CreateAllTables();
-    void CreateSitesTable();
+    int CreateSitesTable();
     int CreateStatesTable();
     void CreateValuesTable();
-    void loadStateData();
+    void loadSite(QStringList list, QString state);
+    void loadStates();
+    void readSitesFile(QString filename, QString state);
 
     static QString getStateAbbrev(QString stateName);
 };

@@ -17,9 +17,37 @@ void QueryManager::CreateAllTables()
     CreateValuesTable();
 }
 
-void QueryManager::CreateSitesTable()
+int QueryManager::CreateSitesTable()
 {
+    QString query = "CREATE TABLE sites"
+            "("
+            "SiteId bigint primary key"
+            ",AgencyID varchar(50)"
+            ",SiteName varchar (255)"
+            ",SiteType varchar(50)"
+            ",Lat double"
+            ",Lon double"
+            ",CoordAcy varchar(50)"
+            ",Datum varchar(50)"
+            ",Alt double"
+            ",AltAcy double"
+            ",AltDatum varchar(50)"
+            ",HucID integer"
+            ",StateID integer"
+            ",foreign key(StateID) references states(stateid)"
+            ");";
+    QSqlQuery qry;
 
+    if (qry.exec(query))
+    {
+        qDebug()<<"sites exectuted successfully";
+        return 0;
+    }
+    else
+    {
+        qDebug()<<"sites not successful";
+        return 1;
+    }
 }
 
 int QueryManager::CreateStatesTable()
@@ -45,7 +73,45 @@ void QueryManager::CreateValuesTable()
 
 }
 
-void QueryManager::loadStateData()
+void QueryManager::loadSite(QStringList list, QString state)
+{
+    QSqlQuery qry;
+    qry.prepare("INSERT INTO sites"
+                "("
+                "SiteId "
+                ",AgencyID"
+                ",SiteName"
+                ",SiteType"
+                ",Lat"
+                ",Lon"
+                ",CoordAcy"
+                ",Datum"
+                ",Alt"
+                ",AltAcy"
+                ",AltDatum"
+                ",HucID"
+                ",StateID"
+                ")"
+                "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+
+    qry.addBindValue(list[1].toInt());
+    qry.addBindValue(list[0]);
+    qry.addBindValue(list[2]);
+    qry.addBindValue(list[3]);
+    qry.addBindValue(list[4].toDouble());
+    qry.addBindValue(list[5].toDouble());
+    qry.addBindValue(list[6]);
+    qry.addBindValue(list[7]);
+    qry.addBindValue(list[8].toDouble());
+    qry.addBindValue(list[9]);
+    qry.addBindValue(list[10]);
+    qry.addBindValue(list[11].toInt());
+    qry.addBindValue(stateNames.indexOf(state)+1);
+    bool work = qry.exec();
+    qDebug()<<work<<"sites insert done";
+}
+
+void QueryManager::loadStates()
 {
     QSqlQuery qry;
 
@@ -57,6 +123,35 @@ void QueryManager::loadStateData()
 
         qry.addBindValue(stateNames[i]);
         qry.exec();
+    }
+}
+
+void QueryManager::readSitesFile(QString filename, QString state)
+{
+    qDebug()<<"in read file"<<filename<<state;
+    QFile inFile(filename);
+    if (inFile.open(QIODevice::ReadOnly|QIODevice::Text))
+    {
+        qDebug()<<"reading file "<<filename;
+        QTextStream inStream(&inFile);
+        QString line;
+        QStringList list;
+        while (!inStream.atEnd())
+        {
+            line = inStream.readLine();
+            list = line.split("\t");
+            if (!QString::compare(list[0], "USGS", Qt::CaseInsensitive))
+            {
+                qDebug()<<"loading site"<<line;
+                loadSite(list, state);
+            }
+        }
+        inFile.close();
+    }
+    else
+    {
+        //error opening file
+        qDebug()<<"error opening file"<<filename;
     }
 }
 

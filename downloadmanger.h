@@ -67,6 +67,7 @@ class DownloadManager: public QObject
     Q_OBJECT
     QNetworkAccessManager manager;
     QList<QNetworkReply *> currentDownloads;
+    QStringList filenames;
 
 public:
     DownloadManager();
@@ -76,11 +77,15 @@ public:
     QString saveFileName(const QUrl &url);
     bool saveToDisk(const QString &filename, QIODevice *data);
     void setBasePath(QString path);
+    QStringList getFilenames();
 
 public slots:
     void execute(QStringList urls);
     void downloadFinished(QNetworkReply *reply);
     void sslErrors(const QList<QSslError> &errors);
+
+signals:
+    done();
 
 private:
     QString m_qsBasePath;
