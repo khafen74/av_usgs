@@ -21,7 +21,7 @@ int QueryManager::CreateSitesTable()
 {
     QString query = "CREATE TABLE sites"
             "("
-            "SiteId bigint primary key"
+            "SiteId integer primary key"
             ",AgencyID varchar(50)"
             ",SiteName varchar (255)"
             ",SiteType varchar(50)"
@@ -78,7 +78,7 @@ void QueryManager::loadSite(QStringList list, QString state)
     QSqlQuery qry;
     qry.prepare("INSERT INTO sites"
                 "("
-                "SiteId "
+                "SiteID "
                 ",AgencyID"
                 ",SiteName"
                 ",SiteType"
@@ -94,7 +94,7 @@ void QueryManager::loadSite(QStringList list, QString state)
                 ")"
                 "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
-    qry.addBindValue(list[1].toInt());
+    qry.addBindValue(list[1].toLongLong());
     qry.addBindValue(list[0]);
     qry.addBindValue(list[2]);
     qry.addBindValue(list[3]);
