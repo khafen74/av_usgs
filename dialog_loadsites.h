@@ -6,7 +6,6 @@
 #include <QtSql>
 #include "urlgenerator.h"
 #include "downloadmanger.h"
-#include "urldownloader.h"
 
 namespace Ui {
 class dialog_LoadSites;
