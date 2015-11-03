@@ -20,6 +20,7 @@ public:
     ~dialog_LoadSites();
 
     void initialize(QString baseDir);
+    void deleteFiles();
 
 private slots:
     void on_btn_ok_clicked();

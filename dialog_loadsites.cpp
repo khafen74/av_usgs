@@ -54,6 +54,15 @@ void dialog_LoadSites::initialize(QString baseDir)
     ui->tv_states->setModel(model);
 }
 
+void dialog_LoadSites::deleteFiles()
+{
+    for (int i=0; i<m_filenames.length(); i++)
+    {
+        QFile file(m_filenames[i]);
+        file.remove();
+    }
+}
+
 void dialog_LoadSites::on_btn_add_clicked()
 {
     QModelIndexList select = ui->tv_states->selectionModel()->selectedRows();
@@ -93,6 +102,7 @@ void dialog_LoadSites::loadSiteData()
     }
 
     ui->list_add->clear();
+    deleteFiles();
 
     this->close();
 }
