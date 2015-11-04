@@ -142,7 +142,7 @@ void MainWindow::on_actionCreate_New_DB_triggered()
     {
         setDbPath(filename);
         setBaseDir(fi.absolutePath());
-        openDB();
+        openDB(true);
     }
 }
 
@@ -160,7 +160,7 @@ void MainWindow::on_actionConnect_to_Existing_DB_triggered()
     {
         setDbPath(filename);
         setBaseDir(fi.absolutePath());
-        openDB();
+        openDB(false);
     }
 }
 
@@ -174,7 +174,8 @@ void MainWindow::setDbPath(QString path)
     m_qsDbPath = path;
 }
 
-void MainWindow::openDB()
+
+void MainWindow::openDB(bool create)
 {
     m_db = QSqlDatabase::addDatabase("QSQLITE");
     m_db.setDatabaseName(m_qsDbPath);
@@ -183,7 +184,7 @@ void MainWindow::openDB()
     {
         QMessageBox::information(this, "Error", "Problem opening database");
     }
-    else
+    if (create)
     {
         m_QueryManager.CreateAllTables();
         m_QueryManager.loadStates();

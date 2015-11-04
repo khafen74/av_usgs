@@ -45,8 +45,12 @@ void dialog_LoadSites::initialize(QString baseDir)
 
     QSqlQuery query;
 
-    query.prepare("select statename from states");
-    query.exec();
+    query.prepare("select states.statename from states inner join (select states.stateid from states except select distinct sites.stateid from sites) rTable on states.stateid = rTable.stateid;");
+    bool test = query.exec();
+    if (!test)
+    {
+        qDebug()<<"load sites query failed";
+    }
     model->setQuery(query);
 
     model->setHeaderData(0, Qt::Horizontal, QObject::tr("State Name"));

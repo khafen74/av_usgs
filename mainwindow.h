@@ -45,7 +45,7 @@ private:
 
     void setBaseDir(QString path);
     void setDbPath(QString path);
-    void openDB();
+    void openDB(bool create);
 };
 
 #endif // MAINWINDOW_H
