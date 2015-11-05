@@ -18,7 +18,7 @@
     <rect>
      <x>20</x>
      <y>20</y>
-     <width>351</width>
+     <width>491</width>
      <height>411</height>
     </rect>
    </property>
@@ -26,9 +26,9 @@
   <widget class="QTableView" name="tv_states">
    <property name="geometry">
     <rect>
-     <x>440</x>
+     <x>520</x>
      <y>20</y>
-     <width>251</width>
+     <width>181</width>
      <height>411</height>
     </rect>
    </property>
@@ -36,9 +36,9 @@
   <widget class="QTableView" name="tv_load">
    <property name="geometry">
     <rect>
-     <x>740</x>
+     <x>710</x>
      <y>20</y>
-     <width>256</width>
+     <width>321</width>
      <height>411</height>
     </rect>
    </property>
@@ -72,9 +72,9 @@
   <widget class="QPushButton" name="btn_loadSites">
    <property name="geometry">
     <rect>
-     <x>440</x>
+     <x>510</x>
      <y>440</y>
-     <width>91</width>
+     <width>111</width>
      <height>23</height>
     </rect>
    </property>
@@ -82,13 +82,13 @@
     <string>Load More Sites</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>20</x>
      <y>500</y>
      <width>975</width>
-     <height>25</height>
+     <height>30</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -296,32 +296,53 @@
     </item>
    </layout>
   </widget>
+  <widget class="QPushButton" name="btn_refresh">
+   <property name="geometry">
+    <rect>
+     <x>630</x>
+     <y>440</y>
+     <width>93</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>23</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>Refresh</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_reset">
+   <property name="geometry">
+    <rect>
+     <x>690</x>
+     <y>570</y>
+     <width>93</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>23</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>Reset</string>
+   </property>
+  </widget>
+  <zorder>layoutWidget</zorder>
   <zorder>tv_sites</zorder>
   <zorder>tv_states</zorder>
   <zorder>tv_load</zorder>
   <zorder>btn_ok</zorder>
   <zorder>btn_close</zorder>
   <zorder>btn_loadSites</zorder>
-  <zorder>btn_add</zorder>
-  <zorder>spin_nYearStart</zorder>
-  <zorder>spin_nMonthStart</zorder>
-  <zorder>spin_nDayStart</zorder>
-  <zorder>spin_nYearEnd</zorder>
-  <zorder>spin_nMonthEnd</zorder>
-  <zorder>spin_nDayEnd</zorder>
-  <zorder>label</zorder>
-  <zorder>label_2</zorder>
-  <zorder>label_3</zorder>
-  <zorder>label_4</zorder>
-  <zorder>label_5</zorder>
-  <zorder>label_6</zorder>
-  <zorder>label_4</zorder>
-  <zorder>label_7</zorder>
-  <zorder>label_8</zorder>
-  <zorder>line_siteNo</zorder>
-  <zorder>label_9</zorder>
-  <zorder>horizontalSpacer</zorder>
-  <zorder>horizontalSpacer_2</zorder>
+  <zorder>btn_refresh</zorder>
+  <zorder>btn_reset</zorder>
  </widget>
  <resources/>
  <connections/>
