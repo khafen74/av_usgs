@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1042</width>
-    <height>612</height>
+    <height>724</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,21 +33,11 @@
     </rect>
    </property>
   </widget>
-  <widget class="QTableView" name="tv_load">
-   <property name="geometry">
-    <rect>
-     <x>710</x>
-     <y>20</y>
-     <width>321</width>
-     <height>411</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QPushButton" name="btn_ok">
    <property name="geometry">
     <rect>
-     <x>810</x>
-     <y>570</y>
+     <x>830</x>
+     <y>680</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -59,8 +49,8 @@
   <widget class="QPushButton" name="btn_close">
    <property name="geometry">
     <rect>
-     <x>920</x>
-     <y>570</y>
+     <x>940</x>
+     <y>680</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -72,8 +62,8 @@
   <widget class="QPushButton" name="btn_loadSites">
    <property name="geometry">
     <rect>
-     <x>510</x>
-     <y>440</y>
+     <x>710</x>
+     <y>370</y>
      <width>111</width>
      <height>23</height>
     </rect>
@@ -82,69 +72,161 @@
     <string>Load More Sites</string>
    </property>
   </widget>
-  <widget class="QWidget" name="layoutWidget">
+  <widget class="QPushButton" name="btn_refresh">
+   <property name="geometry">
+    <rect>
+     <x>710</x>
+     <y>400</y>
+     <width>93</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>23</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>Refresh</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_reset">
+   <property name="geometry">
+    <rect>
+     <x>710</x>
+     <y>680</y>
+     <width>93</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>23</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>Reset</string>
+   </property>
+  </widget>
+  <widget class="QTableWidget" name="table_load">
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>500</y>
-     <width>975</width>
-     <height>30</height>
+     <y>450</y>
+     <width>681</width>
+     <height>251</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_8">
+   <property name="geometry">
+    <rect>
+     <x>713</x>
+     <y>93</y>
+     <width>71</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Start Date</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_9">
+   <property name="geometry">
+    <rect>
+     <x>720</x>
+     <y>50</y>
+     <width>91</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Site Number:</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="line_siteNo">
+   <property name="geometry">
+    <rect>
+     <x>813</x>
+     <y>53</y>
+     <width>121</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>100</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_7">
+   <property name="geometry">
+    <rect>
+     <x>703</x>
+     <y>163</y>
+     <width>71</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>End Date</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_add">
+   <property name="geometry">
+    <rect>
+     <x>793</x>
+     <y>243</y>
+     <width>93</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Add</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>713</x>
+     <y>123</y>
+     <width>253</width>
+     <height>24</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
-    <item>
-     <spacer name="horizontalSpacer">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item>
-     <widget class="QLabel" name="label_9">
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Load  Site No:</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLineEdit" name="line_siteNo">
-      <property name="minimumSize">
-       <size>
-        <width>100</width>
-        <height>0</height>
-       </size>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLabel" name="label_8">
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>From:</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-    </item>
     <item>
      <widget class="QLabel" name="label_5">
       <property name="text">
@@ -202,21 +284,18 @@
       </property>
      </widget>
     </item>
-    <item>
-     <widget class="QLabel" name="label_7">
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string> - To:</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>713</x>
+     <y>193</y>
+     <width>253</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
     <item>
      <widget class="QLabel" name="label">
       <property name="text">
@@ -274,75 +353,17 @@
       </property>
      </widget>
     </item>
-    <item>
-     <spacer name="horizontalSpacer_2">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item>
-     <widget class="QPushButton" name="btn_add">
-      <property name="text">
-       <string>Add</string>
-      </property>
-     </widget>
-    </item>
    </layout>
-  </widget>
-  <widget class="QPushButton" name="btn_refresh">
-   <property name="geometry">
-    <rect>
-     <x>630</x>
-     <y>440</y>
-     <width>93</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>0</width>
-     <height>23</height>
-    </size>
-   </property>
-   <property name="text">
-    <string>Refresh</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="btn_reset">
-   <property name="geometry">
-    <rect>
-     <x>690</x>
-     <y>570</y>
-     <width>93</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>0</width>
-     <height>23</height>
-    </size>
-   </property>
-   <property name="text">
-    <string>Reset</string>
-   </property>
   </widget>
   <zorder>layoutWidget</zorder>
   <zorder>tv_sites</zorder>
   <zorder>tv_states</zorder>
-  <zorder>tv_load</zorder>
   <zorder>btn_ok</zorder>
   <zorder>btn_close</zorder>
   <zorder>btn_loadSites</zorder>
   <zorder>btn_refresh</zorder>
   <zorder>btn_reset</zorder>
+  <zorder>table_load</zorder>
  </widget>
  <resources/>
  <connections/>

@@ -20,6 +20,15 @@ void dialog_LoadData::initialize(QString baseDir)
 
     showSites();
     showStates();
+    setupLoadTable();
+}
+
+void dialog_LoadData::setupLoadTable()
+{
+    QStringList headers;
+    headers << "Site" << "StartDate" << "EndDate"<<"Type";
+    ui->table_load->setColumnCount(4);
+    ui->table_load->setHorizontalHeaderLabels(headers);
 }
 
 void dialog_LoadData::on_btn_loadSites_clicked()
@@ -31,7 +40,6 @@ void dialog_LoadData::on_btn_loadSites_clicked()
 
 void dialog_LoadData::on_btn_add_clicked()
 {
-
 }
 
 void dialog_LoadData::on_btn_ok_clicked()
@@ -90,7 +98,8 @@ void dialog_LoadData::updateSites()
 
 void dialog_LoadData::on_btn_reset_clicked()
 {
-
+    showSites();
+    showStates();
 }
 
 void dialog_LoadData::on_btn_refresh_clicked()

@@ -17,6 +17,7 @@ public:
     ~dialog_LoadData();
 
     void initialize(QString baseDir);
+    void setupLoadTable();
 
 private slots:
     void on_btn_loadSites_clicked();
