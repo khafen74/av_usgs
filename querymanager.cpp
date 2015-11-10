@@ -68,9 +68,36 @@ int QueryManager::CreateStatesTable()
     }
 }
 
-void QueryManager::CreateValuesTable()
+int QueryManager::CreateValuesTable()
 {
+    QString query = "CREATE TABLE datavalues"
+            "("
+            "ValueID integer primary key"
+            ",SiteID integer"
+            ",LocalDateTime datetime"
+            ",UTCDateTime datetime"
+            ",TimeZone varchar(50)"
+            ",TimeZoneID integer"
+            ",QValue double"
+            ",QQualityControlLevel varchar(50)"
+            ",QQualityControlLevelID integer"
+            ",GageHeightValue double"
+            ",GHQualityControlLevel varchar(50)"
+            ",GHQualityControlLevelID integer"
+            ",foreign key(StateID) references states(stateid)"
+            ");";
+    QSqlQuery qry;
 
+    if (qry.exec(query))
+    {
+        qDebug()<<"sites exectuted successfully";
+        return 0;
+    }
+    else
+    {
+        qDebug()<<"sites not successful";
+        return 1;
+    }
 }
 
 void QueryManager::loadSite(QStringList list, QString state)
@@ -169,5 +196,52 @@ QString QueryManager::getStateAbbrev(QString stateName)
     {
         //error
     }
+    return 0;
+}
+
+int QueryManager::getUTCOffset(QString timeZoneAbbrev)
+{
+    if (!QString::compare(timeZoneAbbrev, "ADT", Qt::CaseInsensitive))
+        return -3;
+    else if (!QString::compare(timeZoneAbbrev, "AKDT", Qt::CaseInsensitive))
+        return -8;
+    else if (!QString::compare(timeZoneAbbrev, "AST", Qt::CaseInsensitive))
+        return -4;
+    else if (!QString::compare(timeZoneAbbrev, "AKST", Qt::CaseInsensitive))
+        return -9;
+    else if (!QString::compare(timeZoneAbbrev, "CDT", Qt::CaseInsensitive))
+        return -4;
+    else if (!QString::compare(timeZoneAbbrev, "CST", Qt::CaseInsensitive))
+        return -5;
+    else if (!QString::compare(timeZoneAbbrev, "EGT", Qt::CaseInsensitive))
+        return -1;
+    else if (!QString::compare(timeZoneAbbrev, "EGST", Qt::CaseInsensitive))
+        return 0;
+    else if (!QString::compare(timeZoneAbbrev, "HADT", Qt::CaseInsensitive))
+        return -9;
+    else if (!QString::compare(timeZoneAbbrev, "HAST", Qt::CaseInsensitive))
+        return -10;
+    else if (!QString::compare(timeZoneAbbrev, "HST", Qt::CaseInsensitive))
+        return -10;
+    else if (!QString::compare(timeZoneAbbrev, "MDT", Qt::CaseInsensitive))
+        return -6;
+    else if (!QString::compare(timeZoneAbbrev, "MeST", Qt::CaseInsensitive))
+        return -8;
+    else if (!QString::compare(timeZoneAbbrev, "MST", Qt::CaseInsensitive))
+        return -7;
+    else if (!QString::compare(timeZoneAbbrev, "MDT", Qt::CaseInsensitive))
+        return -7;
+    else if (!QString::compare(timeZoneAbbrev, "PST", Qt::CaseInsensitive))
+        return -8;
+    else if (!QString::compare(timeZoneAbbrev, "PMDT", Qt::CaseInsensitive))
+        return -2;
+    else if (!QString::compare(timeZoneAbbrev, "PMST", Qt::CaseInsensitive))
+        return -3;
+    else if (!QString::compare(timeZoneAbbrev, "WGT", Qt::CaseInsensitive))
+        return -3;
+    else if (!QString::compare(timeZoneAbbrev, "WGST", Qt::CaseInsensitive))
+        return -2;
+    else
+        return -9999;
 }
 

@@ -25,12 +25,13 @@ public:
     void CreateAllTables();
     int CreateSitesTable();
     int CreateStatesTable();
-    void CreateValuesTable();
+    int CreateValuesTable();
     void loadSite(QStringList list, QString state);
     void loadStates();
     void readSitesFile(QString filename, QString state);
 
     static QString getStateAbbrev(QString stateName);
+    static int getUTCOffset(QString timeZoneAbbrev);
 };
 
 #endif // QUERYMANAGER_H
