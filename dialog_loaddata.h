@@ -35,6 +35,8 @@ private slots:
 
     void on_btn_refresh_clicked();
 
+    void on_tv_sites_clicked(const QModelIndex &index);
+
 private:
     Ui::dialog_LoadData *ui;
 

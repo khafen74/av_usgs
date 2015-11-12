@@ -32,8 +32,6 @@ HEADERS  += mainwindow.h \
     querymanager.h
 
 FORMS    += mainwindow.ui \
-    dialogloaddata.ui \
-    dialogselectdata.ui \
     dialog_loaddata.ui \
     dialog_selectdata.ui \
     dialog_loadsites.ui

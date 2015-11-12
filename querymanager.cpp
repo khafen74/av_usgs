@@ -40,7 +40,6 @@ int QueryManager::CreateSitesTable()
 
     if (qry.exec(query))
     {
-        qDebug()<<"sites exectuted successfully";
         return 0;
     }
     else
@@ -87,12 +86,11 @@ int QueryManager::CreateValuesTable()
 
     if (qry.exec(query))
     {
-        qDebug()<<"sites exectuted successfully";
         return 0;
     }
     else
     {
-        qDebug()<<"sites not successful";
+        qDebug()<<"datavalues not successful";
         return 1;
     }
 }

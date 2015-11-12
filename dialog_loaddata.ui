@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1042</width>
+    <width>989</width>
     <height>724</height>
    </rect>
   </property>
@@ -36,7 +36,7 @@
   <widget class="QPushButton" name="btn_ok">
    <property name="geometry">
     <rect>
-     <x>830</x>
+     <x>730</x>
      <y>680</y>
      <width>75</width>
      <height>23</height>
@@ -49,7 +49,7 @@
   <widget class="QPushButton" name="btn_close">
    <property name="geometry">
     <rect>
-     <x>940</x>
+     <x>830</x>
      <y>680</y>
      <width>75</width>
      <height>23</height>
@@ -95,7 +95,7 @@
    <property name="geometry">
     <rect>
      <x>710</x>
-     <y>680</y>
+     <y>450</y>
      <width>93</width>
      <height>23</height>
     </rect>
@@ -120,95 +120,11 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLabel" name="label_8">
-   <property name="geometry">
-    <rect>
-     <x>713</x>
-     <y>93</y>
-     <width>71</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>9</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Start Date</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_9">
-   <property name="geometry">
-    <rect>
-     <x>720</x>
-     <y>50</y>
-     <width>91</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>9</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Site Number:</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="line_siteNo">
-   <property name="geometry">
-    <rect>
-     <x>813</x>
-     <y>53</y>
-     <width>121</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>0</height>
-    </size>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>9</pointsize>
-    </font>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_7">
-   <property name="geometry">
-    <rect>
-     <x>703</x>
-     <y>163</y>
-     <width>71</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>9</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>End Date</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
   <widget class="QPushButton" name="btn_add">
    <property name="geometry">
     <rect>
-     <x>793</x>
-     <y>243</y>
+     <x>790</x>
+     <y>260</y>
      <width>93</width>
      <height>28</height>
     </rect>
@@ -220,141 +136,250 @@
   <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>713</x>
-     <y>123</y>
-     <width>253</width>
-     <height>24</height>
+     <x>710</x>
+     <y>47</y>
+     <width>267</width>
+     <height>194</height>
     </rect>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QLabel" name="label_5">
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <item>
+       <widget class="QLabel" name="label_9">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Site Number:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="line_siteNo">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_8">
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
       <property name="text">
-       <string>Year</string>
+       <string>Start Date</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QSpinBox" name="spin_nYearStart">
-      <property name="minimumSize">
-       <size>
-        <width>51</width>
-        <height>22</height>
-       </size>
-      </property>
-      <property name="minimum">
-       <number>1900</number>
-      </property>
-      <property name="maximum">
-       <number>2100</number>
-      </property>
-     </widget>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string>Year</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="spin_nYearStart">
+        <property name="minimumSize">
+         <size>
+          <width>51</width>
+          <height>22</height>
+         </size>
+        </property>
+        <property name="minimum">
+         <number>1900</number>
+        </property>
+        <property name="maximum">
+         <number>2100</number>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string>Month</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="spin_nMonthStart">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>12</number>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Day</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="spin_nDayStart">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>31</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
     <item>
-     <widget class="QLabel" name="label_6">
+     <widget class="QLabel" name="label_7">
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
       <property name="text">
-       <string>Month</string>
+       <string>End Date</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QSpinBox" name="spin_nMonthStart">
-      <property name="minimum">
-       <number>1</number>
-      </property>
-      <property name="maximum">
-       <number>12</number>
-      </property>
-     </widget>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Year</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="spin_nYearEnd">
+        <property name="minimumSize">
+         <size>
+          <width>51</width>
+          <height>22</height>
+         </size>
+        </property>
+        <property name="minimum">
+         <number>1990</number>
+        </property>
+        <property name="maximum">
+         <number>2100</number>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Month</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="spin_nMonthEnd">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>12</number>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Day</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="spin_nDayEnd">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>31</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
     <item>
-     <widget class="QLabel" name="label_4">
+     <widget class="QLabel" name="label_10">
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
       <property name="text">
-       <string>Day</string>
+       <string>Value Type</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QSpinBox" name="spin_nDayStart">
-      <property name="minimum">
-       <number>1</number>
-      </property>
-      <property name="maximum">
-       <number>31</number>
-      </property>
-     </widget>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QRadioButton" name="rbtn_inst">
+        <property name="font">
+         <font>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Instantaneous</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="rbtn_day">
+        <property name="font">
+         <font>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Daily</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
-   <property name="geometry">
-    <rect>
-     <x>713</x>
-     <y>193</y>
-     <width>253</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_2">
-    <item>
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>Year</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QSpinBox" name="spin_nYearEnd">
-      <property name="minimumSize">
-       <size>
-        <width>51</width>
-        <height>22</height>
-       </size>
-      </property>
-      <property name="minimum">
-       <number>1990</number>
-      </property>
-      <property name="maximum">
-       <number>2100</number>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLabel" name="label_2">
-      <property name="text">
-       <string>Month</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QSpinBox" name="spin_nMonthEnd">
-      <property name="minimum">
-       <number>1</number>
-      </property>
-      <property name="maximum">
-       <number>12</number>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLabel" name="label_3">
-      <property name="text">
-       <string>Day</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QSpinBox" name="spin_nDayEnd">
-      <property name="minimum">
-       <number>1</number>
-      </property>
-      <property name="maximum">
-       <number>31</number>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
+  <zorder>label_8</zorder>
+  <zorder>label_9</zorder>
+  <zorder>line_siteNo</zorder>
+  <zorder>label_7</zorder>
+  <zorder>btn_add</zorder>
+  <zorder>layoutWidget</zorder>
   <zorder>layoutWidget</zorder>
   <zorder>tv_sites</zorder>
   <zorder>tv_states</zorder>
@@ -364,6 +389,9 @@
   <zorder>btn_refresh</zorder>
   <zorder>btn_reset</zorder>
   <zorder>table_load</zorder>
+  <zorder>rbtn_day</zorder>
+  <zorder>rbtn_inst</zorder>
+  <zorder>label_10</zorder>
  </widget>
  <resources/>
  <connections/>
