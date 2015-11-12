@@ -70,22 +70,19 @@ int QueryManager::CreateStatesTable()
 
 int QueryManager::CreateValuesTable()
 {
-    QString query = "CREATE TABLE datavalues"
-            "("
-            "ValueID integer primary key"
-            ",SiteID integer"
-            ",LocalDateTime datetime"
-            ",UTCDateTime datetime"
-            ",TimeZone varchar(50)"
-            ",TimeZoneID integer"
-            ",QValue double"
-            ",QQualityControlLevel varchar(50)"
-            ",QQualityControlLevelID integer"
-            ",GageHeightValue double"
-            ",GHQualityControlLevel varchar(50)"
-            ",GHQualityControlLevelID integer"
-            ",foreign key(StateID) references states(stateid)"
-            ");";
+    QString query = "CREATE TABLE datavalues ("
+            "ValueID integer primary key,"
+            "SiteID integer,"
+            "LocalDateTime DATETIME,"
+            "UTCDateTime DATETIME,"
+            "TimeZoneID VARCHAR(50),"
+            "Qvalue DOUBLE,"
+            "ValueType varchar(2),"
+            "QQaulityControlLevel VARCHAR(50),"
+            "QQaulityControlLevelID integer,"
+            "GageHeightValue DOUBLE,"
+            "GHQualityControlLevel VARCHAR(50),"
+            "GHQualityControlLevelID integer);";
     QSqlQuery qry;
 
     if (qry.exec(query))
