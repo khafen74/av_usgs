@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include "dialog_loadsites.h"
+#include "downloadmanger.h"
+#include "querymanager.h"
 
 namespace Ui {
 class dialog_LoadData;
@@ -36,11 +38,13 @@ private slots:
     void on_btn_refresh_clicked();
 
     void on_tv_sites_clicked(const QModelIndex &index);
+    void loadDataValues();
 
 private:
     Ui::dialog_LoadData *ui;
 
     QString m_qsBaseDir;
+    DownloadManager *dlmanage;
 };
 
 #endif // DIALOG_LOADDATA_H

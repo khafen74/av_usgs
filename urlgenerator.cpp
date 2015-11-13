@@ -51,3 +51,16 @@ QString UrlGenerator::siteTimePeriod(int nSite, int nYearS, int nMonthS, int nDa
     return qsUrl;
 }
 
+QString UrlGenerator::siteTimePeriod(QString site, QString startDate, QString endDate, QString type)
+{
+    QString qsUrl;
+    int nSite = site.toInt();
+    site = QString("%1").arg(nSite, 8, 10, QChar('0'));
+
+    qsUrl = m_qsUrlBase + type + "/?format=" + m_qsFormat + "&sites=" + site + "&startDT=" + startDate +
+            "&endDT=" + endDate + "&parameterCd=" + m_qsParams;
+
+    qDebug()<<qsUrl;
+    return qsUrl;
+}
+

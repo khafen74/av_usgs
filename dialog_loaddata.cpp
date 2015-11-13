@@ -64,7 +64,22 @@ void dialog_LoadData::on_btn_add_clicked()
 
 void dialog_LoadData::on_btn_ok_clicked()
 {
-    this->close();
+    QStringList urls;
+    UrlGenerator UrlGen;
+    QString site, start, end, type;
+
+    for (int i=0; i<ui->table_load->rowCount(); i++)
+    {
+        site = ui->table_load->item(i,0)->text();
+        start = ui->table_load->item(i,1)->text();
+        end = ui->table_load->item(i,2)->text();
+        type = ui->table_load->item(i,3)->text();
+        urls.append(UrlGen.siteTimePeriod(site, start, end, type));
+    }
+    dlmanage = new DownloadManager();
+    connect(dlmanage, SIGNAL(done()), SLOT(loadDataValues()));
+    dlmanage->setBasePath(m_qsBaseDir);
+    dlmanage->execute(urls);
 }
 
 void dialog_LoadData::on_btn_close_clicked()
@@ -118,6 +133,10 @@ void dialog_LoadData::updateSites()
 
 void dialog_LoadData::on_btn_reset_clicked()
 {
+    for (int i=0; i<ui->table_load->rowCount(); i++)
+    {
+        ui->table_load->removeRow(i);
+    }
     showSites();
     showStates();
 }
@@ -133,4 +152,10 @@ void dialog_LoadData::on_tv_sites_clicked(const QModelIndex &index)
     int row = index.row();
     QString siteno = index.sibling(row, 0).data().toString();
     ui->line_siteNo->setText(siteno);
+}
+
+void dialog_LoadData::loadDataValues()
+{
+    qDebug()<<"url download done";
+    this->close();
 }

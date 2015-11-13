@@ -14,6 +14,7 @@ public:
     void initialize();
     QString stateSites(QString state);
     QString siteTimePeriod(int nSite, int nYearS, int nMonthS, int nDayS, int nYearE, int nMonthE, int nDayE, int type);
+    QString siteTimePeriod(QString site, QString startDate, QString endDate, QString type);
 
 private:
     QString m_qsUrlBase;

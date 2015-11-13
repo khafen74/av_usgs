@@ -94,14 +94,12 @@ void dialog_LoadSites::on_btn_remove_clicked()
 
 void dialog_LoadSites::loadSiteData()
 {
-    qDebug()<<"loading site data";
     QueryManager QryManage;
     m_filenames = dlmanage->getFilenames();
-    qDebug()<<"files"<<m_filenames.length();
 
     for (int i=0; i<m_filenames.length(); i++)
     {
-        qDebug()<<"looping file names"<<m_filenames[i];
+        qDebug()<<"reading file"<<m_filenames[i];
         QryManage.readSitesFile(m_filenames[i], m_statenames[i]);
     }
 
