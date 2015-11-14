@@ -74,6 +74,8 @@ void dialog_LoadData::on_btn_ok_clicked()
         start = ui->table_load->item(i,1)->text();
         end = ui->table_load->item(i,2)->text();
         type = ui->table_load->item(i,3)->text();
+        m_type.append(type);
+        m_site.append(site);
         urls.append(UrlGen.siteTimePeriod(site, start, end, type));
     }
     dlmanage = new DownloadManager();
@@ -157,5 +159,26 @@ void dialog_LoadData::on_tv_sites_clicked(const QModelIndex &index)
 void dialog_LoadData::loadDataValues()
 {
     qDebug()<<"url download done";
+
+    QueryManager QryManage;
+    m_filenames = dlmanage->getFilenames();
+
+    for (int i=0; i<m_filenames.length(); i++)
+    {
+        qDebug()<<"reading file"<<m_filenames[i]<<m_filenames.length()<<m_type.length()<<m_site.length();
+        QryManage.readValues(m_filenames[i], m_type[i], m_site[i]);
+    }
+
+    ui->table_load->clear();
+    deleteFiles();
     this->close();
+}
+
+void dialog_LoadData::deleteFiles()
+{
+    for (int i=0; i<m_filenames.length(); i++)
+    {
+        QFile file(m_filenames[i]);
+        file.remove();
+    }
 }

@@ -76,12 +76,9 @@ int QueryManager::CreateValuesTable()
             "UTCDateTime DATETIME,"
             "TimeZoneID VARCHAR(50),"
             "Qvalue DOUBLE,"
-            "ValueType varchar(2),"
-            "QQaulityControlLevel VARCHAR(50),"
-            "QQaulityControlLevelID integer,"
-            "GageHeightValue DOUBLE,"
-            "GHQualityControlLevel VARCHAR(50),"
-            "GHQualityControlLevelID integer);";
+            "ValueType VARCHAR(50),"
+            "QualityControlLevel VARCHAR(50),"
+            "QualityControlLevelID integer);";
     QSqlQuery qry;
 
     if (qry.exec(query))
@@ -152,7 +149,6 @@ void QueryManager::readSitesFile(QString filename, QString state)
     QFile inFile(filename);
     if (inFile.open(QIODevice::ReadOnly|QIODevice::Text))
     {
-        qDebug()<<"reading file "<<filename;
         QTextStream inStream(&inFile);
         QString line;
         QStringList list;
@@ -166,6 +162,96 @@ void QueryManager::readSitesFile(QString filename, QString state)
             }
         }
         inFile.close();
+    }
+    else
+    {
+        //error opening file
+        qDebug()<<"error opening file"<<filename;
+    }
+}
+
+void QueryManager::loadValues(QStringList list, QString site, QString type)
+{
+    QDateTime local, utc;
+    double q;
+    int qid;
+    QString quality;
+    QString offset;
+
+    if (list.length()>5)
+    {
+        type = "iv";
+        offset = list[3];
+        local = QDateTime::fromString(list[2], "yyyy-MM-dd hh:mm");
+        int offsetUTC = getUTCOffset(offset);
+        utc = local.addSecs(offsetUTC*3600);
+        quality = list[5];
+        q = list[4].toDouble();
+        //qDebug()<<"load instant values"<<offset<<local<<utc<<quality<<q;
+    }
+    else
+    {
+       type = "dv";
+        offset = "None";
+        local = QDateTime::fromString(list[2], "yyyy-MM-dd");
+        utc = local;
+        quality = list[4];
+        q = list[3].toDouble();
+    }
+
+    qid = getQualityControlLevelID(quality);
+
+    QSqlQuery qry;
+    qry.prepare("INSERT INTO datavalues"
+                "("
+                "SiteID"
+                ",LocalDateTime"
+                ",UTCDateTime"
+                ",TimeZoneID"
+                ",Qvalue"
+                ",ValueType"
+                ",QualityControlLevel"
+                ",QualityControlLevelID"
+                ")"
+                "VALUES (?,?,?,?,?,?,?,?);");
+
+    qry.addBindValue(site.toLongLong());
+    qry.addBindValue(local);
+    qry.addBindValue(utc);
+    qry.addBindValue(offset);
+    qry.addBindValue(q);
+    qry.addBindValue(type);
+    qry.addBindValue(quality);
+    qry.addBindValue(qid);
+    bool good = qry.exec();
+
+    if (!good)
+    {
+        qDebug()<<"error loading values"<<qry.executedQuery()<<site.toLongLong()<<q<<type<<quality;
+    }
+}
+
+void QueryManager::readValues(QString filename, QString type, QString site)
+{
+    QFile inFile(filename);
+    if (inFile.open(QIODevice::ReadOnly|QIODevice::Text))
+    {
+        QTextStream inStream(&inFile);
+        QString line;
+        QStringList list;
+
+        while (!inStream.atEnd())
+        {
+            line = inStream.readLine();
+            list = line.split("\t");
+            if (!QString::compare(list[0], "USGS", Qt::CaseInsensitive))
+            {
+                loadValues(list, site, type);
+            }
+        }
+
+        inFile.close();
+        qDebug()<<"finished file "<<filename;
     }
     else
     {
@@ -192,6 +278,22 @@ QString QueryManager::getStateAbbrev(QString stateName)
         //error
     }
     return 0;
+}
+
+int QueryManager::getQualityControlLevelID(QString quality)
+{
+    if (!QString::compare(quality, "P", Qt::CaseInsensitive))
+    {
+        return 0;
+    }
+    else if (!QString::compare(quality, "A", Qt::CaseInsensitive))
+    {
+        return 1;
+    }
+    else
+    {
+        return -9999;
+    }
 }
 
 int QueryManager::getUTCOffset(QString timeZoneAbbrev)

@@ -39,11 +39,13 @@ private slots:
 
     void on_tv_sites_clicked(const QModelIndex &index);
     void loadDataValues();
+    void deleteFiles();
 
 private:
     Ui::dialog_LoadData *ui;
 
     QString m_qsBaseDir;
+    QStringList m_filenames, m_type, m_site;
     DownloadManager *dlmanage;
 };
 

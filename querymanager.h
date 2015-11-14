@@ -29,8 +29,11 @@ public:
     void loadSite(QStringList list, QString state);
     void loadStates();
     void readSitesFile(QString filename, QString state);
+    void loadValues(QStringList list, QString site, QString type);
+    void readValues(QString filename, QString type, QString site);
 
     static QString getStateAbbrev(QString stateName);
+    static int getQualityControlLevelID(QString quality);
     static int getUTCOffset(QString timeZoneAbbrev);
 };
 
