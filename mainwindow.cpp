@@ -193,5 +193,7 @@ void MainWindow::openDB(bool create)
 
 void MainWindow::on_btn_select_clicked()
 {
-
+    dialog_SelectData dialog(this);
+    dialog.setModal(true);
+    dialog.exec();
 }

@@ -10,6 +10,7 @@
 #include <iostream>
 #include "querymanager.h"
 #include "dialog_loaddata.h"
+#include "dialog_selectdata.h"
 
 namespace Ui {
 class MainWindow;

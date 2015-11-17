@@ -12,3 +12,18 @@ dialog_SelectData::~dialog_SelectData()
 {
     delete ui;
 }
+
+void dialog_SelectData::on_btn_addDv_clicked()
+{
+
+}
+
+void dialog_SelectData::on_btn_addIv_clicked()
+{
+
+}
+
+void dialog_SelectData::on_btn_reset_clicked()
+{
+
+}
