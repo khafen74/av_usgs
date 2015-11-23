@@ -260,6 +260,35 @@ void QueryManager::readValues(QString filename, QString type, QString site)
     }
 }
 
+QString QueryManager::dateFromInt(int year, int month, int day)
+{
+    QString date, qsYear, qsMonth, qsDay;
+
+    qsYear = QString::number(year);
+    if (month < 10)
+    {
+        qsMonth = "0"+QString::number(month);
+    }
+    else
+    {
+        qsMonth = QString::number(month);
+    }
+    if (day < 10)
+    {
+        qsDay = "0"+QString::number(day);
+    }
+    else
+    {
+        qsDay = QString::number(day);
+    }
+
+    qsYear = QString::number(year);
+
+    date = qsYear+"-"+qsMonth+"-"+qsDay;
+
+    return date;
+}
+
 QString QueryManager::getStateAbbrev(QString stateName)
 {
     bool exists = false;
@@ -294,6 +323,15 @@ int QueryManager::getQualityControlLevelID(QString quality)
     {
         return -9999;
     }
+}
+
+QString QueryManager::timeSeriesQuery(QString siteno, QString startDate, QString endDate, QString valueType)
+{
+    QString query;
+
+    query = "select * from datavalues where siteid="+siteno+" and valuetype=\'"+valueType+"\' and UTCDateTime>=datetime(\'"+startDate+"\') and UTCDateTime<=datetime(\'"+endDate+"\');";
+
+    return query;
 }
 
 int QueryManager::getUTCOffset(QString timeZoneAbbrev)

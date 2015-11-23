@@ -80,7 +80,7 @@
        </font>
       </property>
       <property name="text">
-       <string>Start Date</string>
+       <string>Start Date UTC</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -156,7 +156,7 @@
        </font>
       </property>
       <property name="text">
-       <string>End Date</string>
+       <string>End Date UTC</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -226,7 +226,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QTableWidget" name="tableWidget">
+  <widget class="QTableWidget" name="table_select">
    <property name="geometry">
     <rect>
      <x>30</x>

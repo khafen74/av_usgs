@@ -32,8 +32,10 @@ public:
     void loadValues(QStringList list, QString site, QString type);
     void readValues(QString filename, QString type, QString site);
 
+    static QString dateFromInt(int year, int month, int day);
     static QString getStateAbbrev(QString stateName);
     static int getQualityControlLevelID(QString quality);
+    static QString timeSeriesQuery(QString siteno, QString startDate, QString endDate, QString valueType);
     static int getUTCOffset(QString timeZoneAbbrev);
 };
 

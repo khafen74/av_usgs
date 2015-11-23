@@ -194,6 +194,34 @@ void MainWindow::openDB(bool create)
 void MainWindow::on_btn_select_clicked()
 {
     dialog_SelectData dialog(this);
+    connect(&dialog, &dialog_SelectData::queriesDone, this, &MainWindow::on_queriesDone);
     dialog.setModal(true);
     dialog.exec();
+}
+
+void MainWindow::on_queriesDone(QList<QString> queries)
+{
+    qDebug()<<"exectuing queries";
+    QSqlQuery query;
+
+    double value, dateSecs;
+    QDateTime date;
+
+    for (int i=0; i<queries.length(); i++)
+    {
+        bool good = query.exec(queries[i]);
+        if (good)
+        {
+            while (query.next())
+            {
+                value = query.value(5).toDouble();
+                date = query.value(3).toDateTime();
+                qDebug()<<date<<value;
+            }
+        }
+        else
+        {
+            qDebug()<<"problem exectuing query "<<queries[i];
+        }
+    }
 }

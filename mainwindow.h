@@ -37,12 +37,17 @@ private slots:
 
     void on_btn_select_clicked();
 
+public slots:
+
+    void on_queriesDone(QList<QString> queries);
+
 private:
     Ui::MainWindow *ui;
     QSqlDatabase m_db;
     QString m_qsDbPath;
     QString m_qsBaseDir;
     QueryManager m_QueryManager;
+    QList< QVector<double> > m_plotData;
 
     void setBaseDir(QString path);
     void setDbPath(QString path);
