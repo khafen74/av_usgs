@@ -11,6 +11,7 @@
 #include "querymanager.h"
 #include "dialog_loaddata.h"
 #include "dialog_selectdata.h"
+#include "resample.h"
 
 namespace Ui {
 class MainWindow;
@@ -24,8 +25,9 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    void plot();
+
 private slots:
-    void on_btn_refresh_clicked();
 
     void on_tableView_clicked(const QModelIndex &index);
 
@@ -40,6 +42,7 @@ private slots:
 public slots:
 
     void on_queriesDone(QList<QString> queries);
+    void on_siteListReady(QList<QString> sites);
 
 private:
     Ui::MainWindow *ui;
@@ -47,7 +50,8 @@ private:
     QString m_qsDbPath;
     QString m_qsBaseDir;
     QueryManager m_QueryManager;
-    QList< QVector<double> > m_plotData;
+    QList< QVector<double> > m_baseData, m_plotData;
+    QList<QString> m_sites;
 
     void setBaseDir(QString path);
     void setDbPath(QString path);

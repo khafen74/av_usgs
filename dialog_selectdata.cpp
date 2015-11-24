@@ -19,7 +19,16 @@ dialog_SelectData::~dialog_SelectData()
 
 void dialog_SelectData::addToSelect(QString valueType)
 {
-    QModelIndexList selection = ui->tv_sitesDv->selectionModel()->selectedRows();
+    QModelIndexList selection;
+
+    if (!QString::compare(valueType, "dv"))
+    {
+        selection = ui->tv_sitesDv->selectionModel()->selectedRows();
+    }
+    else if (!QString::compare(valueType, "iv"))
+    {
+        selection  = ui->tv_sitesIv->selectionModel()->selectedRows();
+    }
 
     for (int i=0; i<selection.count(); i++)
     {
@@ -65,6 +74,8 @@ void dialog_SelectData::on_btn_reset_clicked()
     {
         ui->table_select->removeRow(ui->table_select->rowCount()-1);
     }
+
+    setupSelectTable();
 }
 
 void dialog_SelectData::showSitesIv()
@@ -119,10 +130,12 @@ void dialog_SelectData::on_btn_ok_clicked()
     setStartDate(QueryManager::dateFromInt(ui->spin_nYearStart->value(), ui->spin_nMonthStart->value(), ui->spin_nDayStart->value()));
     setEndDate(QueryManager::dateFromInt(ui->spin_nYearEnd->value(), ui->spin_nMonthEnd->value(), ui->spin_nDayEnd->value()));
     m_queries.clear();
+    m_sites.clear();
 
     for (int i=0; i<ui->table_select->rowCount(); i++)
     {
         QString query(QueryManager::timeSeriesQuery(ui->table_select->item(i,0)->text(), m_qsStartDate, m_qsEndDate, ui->table_select->item(i,1)->text()));
+        m_sites.append(ui->table_select->item(i,0)->text() + " " +ui->table_select->item(i,1)->text());
         m_queries.append(query);
     }
 

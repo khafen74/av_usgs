@@ -6,89 +6,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-//    mydb = QSqlDatabase::addDatabase("QSQLITE");
-//    mydb.setDatabaseName("database.db");
-
-//    if (mydb.open())
-//    {
-//        qDebug()<<"db open";
-
-//        QSqlQuery qry;
-//        if (qry.exec("CREATE TABLE sites "
-//                     "(siteid integer primary key, "
-//                     "agency varchar(10), "
-//                     "siteno int, "
-//                     "sitename varchar(255), "
-//                     "sitetype varchar(10), "
-//                     "latitude double, "
-//                     "longitude double, "
-//                     "latlongacc varchar(10), "
-//                     "datum varchar(10), "
-//                     "elevation double, "
-//                     "elevationacc varchar(3), "
-//                     "verticaldatum varchar(10), "
-//                     "huc int)"))
-//        {
-//            qDebug()<<"query complete";
-//        }
-//        else
-//        {
-//            qDebug()<<"query failed";
-//        }
-//    }
-//    else
-//    {
-//        qDebug()<<"db failed to open";
-//    }
-
-//    QFile inFile("text.txt");
-//    if (inFile.open(QIODevice::ReadOnly|QIODevice::Text))
-//    {
-//        QTextStream stream(&inFile);
-//        QString line;
-//        QStringList list;
-//        QSqlQuery query;
-
-//        int count = 0;
-//        while (!stream.atEnd())
-//        {
-//            line = stream.readLine();
-//            list = line.split("\t");
-//            query.prepare("INSERT INTO sites ("
-//                          "agency"
-//                          ",siteno"
-//                          ",sitename"
-//                          ",sitetype"
-//                          ",latitude"
-//                          ",longitude"
-//                          ",latlongacc"
-//                          ",datum"
-//                          ",elevation"
-//                          ",elevationacc"
-//                          ",verticaldatum"
-//                          ",huc"
-//                          ") "
-//                          "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-//            query.addBindValue(list[0]);
-//            query.addBindValue(list[1].toInt());
-//            query.addBindValue(list[2]);
-//            query.addBindValue(list[3]);
-//            query.addBindValue(list[4].toDouble());
-//            query.addBindValue(list[5].toDouble());
-//            query.addBindValue(list[6]);
-//            query.addBindValue(list[7]);
-//            query.addBindValue(list[8].toDouble());
-//            query.addBindValue(list[9]);
-//            query.addBindValue(list[10]);
-//            query.addBindValue(list[11].toInt());
-//            query.exec();
-//            count++;
-//        }
-//    }
-//    else
-//    {
-//        qDebug()<<"error opening file";
-//    }
 }
 
 MainWindow::~MainWindow()
@@ -97,22 +14,20 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_btn_refresh_clicked()
+void MainWindow::plot()
 {
-    qDebug()<<"refresh clicked";
+    ui->plot_main->addGraph();
+    ui->plot_main->graph(0)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssDot));
+    ui->plot_main->graph(0)->setData(m_plotData[0], m_plotData[1]);
+    ui->plot_main->xAxis->setTickLabelType(QCPAxis::ltDateTime);
+    ui->plot_main->xAxis->setAutoTickStep(true);
+    ui->plot_main->xAxis->setDateTimeFormat("MM/dd\nyyyy");
+    ui->plot_main->xAxis->setRange(m_plotData[0].first()-24*3600, m_plotData[0].last()+24*3600);
+    ui->plot_main->yAxis->setRange(50, 100);
 
-    QSqlQueryModel *model = new QSqlQueryModel();
-
-    QSqlQuery *query = new QSqlQuery(m_db);
-
-    query->prepare("select statename from states");
-    query->exec();
-    model->setQuery(*query);
-//    model->setHeaderData(0, Qt::Horizontal, QObject::tr("Site Number"));
-//    model->setHeaderData(1, Qt::Horizontal, QObject::tr("Site Name"));
-
-    ui->tableView->setModel(model);
-    ui->tableView->setColumnWidth(1, 300);
+    ui->plot_main->replot();
+    ui->plot_main->update();
+    ui->plot_main->repaint();
 }
 
 void MainWindow::on_tableView_clicked(const QModelIndex &index)
@@ -195,17 +110,17 @@ void MainWindow::on_btn_select_clicked()
 {
     dialog_SelectData dialog(this);
     connect(&dialog, &dialog_SelectData::queriesDone, this, &MainWindow::on_queriesDone);
+    connect(&dialog, &dialog_SelectData::siteListReady, this, &MainWindow::on_siteListReady);
     dialog.setModal(true);
     dialog.exec();
 }
 
 void MainWindow::on_queriesDone(QList<QString> queries)
 {
-    qDebug()<<"exectuing queries";
     QSqlQuery query;
+    QVector<double> dates, values;
 
-    double value, dateSecs;
-    QDateTime date;
+    double value, dateMsecs;
 
     for (int i=0; i<queries.length(); i++)
     {
@@ -215,13 +130,27 @@ void MainWindow::on_queriesDone(QList<QString> queries)
             while (query.next())
             {
                 value = query.value(5).toDouble();
-                date = query.value(3).toDateTime();
-                qDebug()<<date<<value;
+                dateMsecs = query.value(3).toDateTime().toTime_t();
+                values.append(value);
+                dates.append(dateMsecs);
             }
         }
         else
         {
             qDebug()<<"problem exectuing query "<<queries[i];
         }
+
+        m_baseData.append(dates);
+        m_baseData.append(values);
     }
+
+    Resampler resample(m_baseData[0], m_baseData[1]);
+    resample.dailyMax();
+    resample.dailyMin();
+    resample.dailyMean();
+}
+
+void MainWindow::on_siteListReady(QList<QString> sites)
+{
+    m_sites = sites;
 }

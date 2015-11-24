@@ -329,7 +329,8 @@ QString QueryManager::timeSeriesQuery(QString siteno, QString startDate, QString
 {
     QString query;
 
-    query = "select * from datavalues where siteid="+siteno+" and valuetype=\'"+valueType+"\' and UTCDateTime>=datetime(\'"+startDate+"\') and UTCDateTime<=datetime(\'"+endDate+"\');";
+    query = "select * from datavalues where siteid="+siteno+" and valuetype=\'"+valueType+
+            "\' and UTCDateTime>=datetime(\'"+startDate+"\') and UTCDateTime<=datetime(\'"+endDate+"\') order by UTCDateTime;";
 
     return query;
 }

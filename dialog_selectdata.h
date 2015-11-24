@@ -37,11 +37,12 @@ private slots:
 
 signals:
     void queriesDone(QList<QString> queries);
+    void siteListReady(QList<QString> sites);
 
 private:
     Ui::dialog_SelectData *ui;
     QString m_qsStartDate, m_qsEndDate;
-    QList<QString> m_queries;
+    QList<QString> m_queries, m_sites;
 };
 
 #endif // DIALOG_SELECTDATA_H

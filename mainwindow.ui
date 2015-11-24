@@ -27,16 +27,6 @@
      <string>Refresh</string>
     </property>
    </widget>
-   <widget class="QTableView" name="tableView">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>90</y>
-      <width>841</width>
-      <height>461</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QPushButton" name="btn_load">
     <property name="geometry">
      <rect>
@@ -61,6 +51,16 @@
     </property>
     <property name="text">
      <string>Select Data</string>
+    </property>
+   </widget>
+   <widget class="QCustomPlot" name="plot_main" native="true">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>80</y>
+      <width>871</width>
+      <height>471</height>
+     </rect>
     </property>
    </widget>
   </widget>
@@ -110,6 +110,14 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QCustomPlot</class>
+   <extends>QWidget</extends>
+   <header>qcustomplot.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     dialog_loaddata.cpp \
     dialog_selectdata.cpp \
     dialog_loadsites.cpp \
-    querymanager.cpp
+    querymanager.cpp \
+    resample.cpp
 
 HEADERS  += mainwindow.h \
     downloadmanger.h \
@@ -29,7 +30,8 @@ HEADERS  += mainwindow.h \
     dialog_loaddata.h \
     dialog_selectdata.h \
     dialog_loadsites.h \
-    querymanager.h
+    querymanager.h \
+    resample.h
 
 FORMS    += mainwindow.ui \
     dialog_loaddata.ui \
