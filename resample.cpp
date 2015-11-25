@@ -2,12 +2,13 @@
 
 Resampler::Resampler()
 {
-
+    setDayOfYear();
 }
 
 Resampler::Resampler(QVector<double> dates, QVector<double> values)
 {
     setData(dates, values);
+    setDayOfYear();
 }
 
 void Resampler::setDates(QVector<double> dates)
@@ -150,6 +151,29 @@ void Resampler::dailyMean()
     m_newValues.append(mean);
 }
 
+void Resampler::meanByDay()
+{
+    clearAll();
+    QDateTime datetime;
+    int doy, index;
+    QVector<double> count(366), sum(366), avg;
+    count.fill(0.0);
+    sum.fill(0.0);
+
+    for (int i=0; i<m_baseDates.length(); i++)
+    {
+        datetime = QDateTime::fromTime_t(m_baseDates[i]);
+        doy = datetime.date().dayOfYear();
+        index = m_dayOfYear.indexOf(doy);
+        sum[index]+=m_baseValues[i];
+        count[index]+=1.0;
+    }
+    for (int i=0; i<m_dayOfYear.length(); i++)
+    {
+        avg.append(sum[i]/count[i]);
+    }
+}
+
 void Resampler::clearDates()
 {
     m_newDates.clear();
@@ -164,5 +188,14 @@ void Resampler::clearAll()
 {
     clearDates();
     clearValues();
+}
+
+void Resampler::setDayOfYear()
+{
+    m_dayOfYear.clear();
+    for (int i=0; i<367; i++)
+    {
+        m_dayOfYear.append(i+1.0);
+    }
 }
 

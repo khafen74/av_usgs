@@ -140,6 +140,7 @@ void dialog_SelectData::on_btn_ok_clicked()
     }
 
     emit queriesDone(m_queries);
+    emit siteListReady(m_sites);
 
     this->close();
 }

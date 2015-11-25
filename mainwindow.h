@@ -50,7 +50,7 @@ private:
     QString m_qsDbPath;
     QString m_qsBaseDir;
     QueryManager m_QueryManager;
-    QList< QVector<double> > m_baseData, m_plotData;
+    QList< QVector<double> > m_baseData, m_daily, m_byDay, m_byMonth, m_byYear;
     QList<QString> m_sites;
 
     void setBaseDir(QString path);

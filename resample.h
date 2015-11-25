@@ -30,12 +30,14 @@ public:
     void minByYear();
 
 private:
-    QVector<double> m_baseDates, m_baseValues;
+    QVector<double> m_baseDates, m_baseValues, m_dayOfYear;
     QVector<double> m_newDates, m_newValues;
+    QList< QVector<double> > m_daily, m_byDay, m_byMonth, m_byYear;
 
     void clearDates();
     void clearValues();
     void clearAll();
+    void setDayOfYear();
 };
 
 #endif // RESAMPLE_H

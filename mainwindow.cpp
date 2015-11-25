@@ -18,11 +18,11 @@ void MainWindow::plot()
 {
     ui->plot_main->addGraph();
     ui->plot_main->graph(0)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssDot));
-    ui->plot_main->graph(0)->setData(m_plotData[0], m_plotData[1]);
+    //ui->plot_main->graph(0)->setData(m_plotData[0], m_plotData[1]);
     ui->plot_main->xAxis->setTickLabelType(QCPAxis::ltDateTime);
     ui->plot_main->xAxis->setAutoTickStep(true);
     ui->plot_main->xAxis->setDateTimeFormat("MM/dd\nyyyy");
-    ui->plot_main->xAxis->setRange(m_plotData[0].first()-24*3600, m_plotData[0].last()+24*3600);
+    //ui->plot_main->xAxis->setRange(m_plotData[0].first()-24*3600, m_plotData[0].last()+24*3600);
     ui->plot_main->yAxis->setRange(50, 100);
 
     ui->plot_main->replot();
