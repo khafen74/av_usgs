@@ -12,28 +12,33 @@ public:
     QVector<double> getResampledDates();
     QVector<double> getResampledValues();
 
+    static QVector<double> getMinMaxDates(QList< QVector<double> > allDates);
+    static QVector<double> getDays();
+    static QVector<double> getMonths();
+    static QVector<double> getYears(QList<QVector<double> > allDates);
     void setDates(QVector<double> dates);
     void setValues(QVector<double> values);
     void setData(QVector<double> dates, QVector<double> values);
 
-    void dailyMax();
-    void dailyMin();
-    void dailyMean();
-    void meanByDay();
-    void meanByMonth();
-    void meanByYear();
-    void maxByDay();
-    void maxByMonth();
-    void maxByYear();
-    void minByDay();
-    void minByMonth();
-    void minByYear();
+    QVector<double> dailyMax();
+    QVector<double> dailyMin();
+    QVector<double> dailyMean();
+    QVector<double> meanByDay();
+    QVector<double> meanByMonth();
+    QVector<double> meanByYear();
+    QVector<double> maxByDay();
+    QVector<double> maxByMonth();
+    QVector<double> maxByYear();
+    QVector<double> minByDay();
+    QVector<double> minByMonth();
+    QVector<double> minByYear();
 
 private:
-    QVector<double> m_baseDates, m_baseValues, m_dayOfYear;
+    QVector<double> m_baseDates, m_baseValues, m_dayOfYear, m_months;
     QVector<double> m_newDates, m_newValues;
     QList< QVector<double> > m_daily, m_byDay, m_byMonth, m_byYear;
 
+    void init();
     void clearDates();
     void clearValues();
     void clearAll();

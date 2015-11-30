@@ -16,14 +16,36 @@ MainWindow::~MainWindow()
 
 void MainWindow::plot()
 {
-    ui->plot_main->addGraph();
-    ui->plot_main->graph(0)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssDot));
-    //ui->plot_main->graph(0)->setData(m_plotData[0], m_plotData[1]);
+    qDebug()<<"overall lengths"<<m_dates.length()<<m_daily.length();
     ui->plot_main->xAxis->setTickLabelType(QCPAxis::ltDateTime);
     ui->plot_main->xAxis->setAutoTickStep(true);
     ui->plot_main->xAxis->setDateTimeFormat("MM/dd\nyyyy");
-    //ui->plot_main->xAxis->setRange(m_plotData[0].first()-24*3600, m_plotData[0].last()+24*3600);
+    qDebug()<<"setting x range";
+    ui->plot_main->xAxis->setRange(m_datesMinMax[0]-24*3600, m_datesMinMax[1]+24*3600);
+    qDebug()<<"x range set";
     ui->plot_main->yAxis->setRange(50, 100);
+    int increment = 3;
+    int offset = 0;
+    QVector<int> red, green, blue;
+    red.append(242), red.append(50), red.append(5);
+    green.append(12), green.append(12), green.append(245);
+    blue.append(24), blue.append(242), blue.append(5);
+
+    for (int i=0; i<m_dates.length(); i++)
+    {
+        ui->plot_main->addGraph();
+        ui->plot_main->graph(i)->setPen(QPen(QColor(red[i], green[i], blue[i])));
+        ui->plot_main->graph(i)->setLineStyle(QCPGraph::lsLine);
+        qDebug()<<i<<"graph added";
+        ui->plot_main->graph(i)->setData(m_dates[i], m_daily[offset]);
+        qDebug()<<"data set";
+        qDebug()<<"lengths"<<m_dates[i].length()<<m_daily[i+offset].length();
+        for (int j=0; j<m_daily[i+offset].length(); j++)
+        {
+            qDebug()<<m_daily[i+offset][j];
+        }
+        offset += increment;
+    }
 
     ui->plot_main->replot();
     ui->plot_main->update();
@@ -89,6 +111,26 @@ void MainWindow::setDbPath(QString path)
     m_qsDbPath = path;
 }
 
+void MainWindow::setupPlotData()
+{
+    clearPlotData();
+
+    m_days = Resampler::getDays();
+    m_months = Resampler::getMonths();
+    m_years = Resampler::getYears(m_baseDates);
+    m_datesMinMax = Resampler::getMinMaxDates(m_baseDates);
+
+    Resampler Resample;
+    for (int i=0; i<m_baseData.length(); i++)
+    {
+        Resample.setData(m_baseDates[i], m_baseData[i]);
+        m_daily.append(Resample.dailyMean());
+        m_dates.append(Resample.getResampledDates());
+        m_daily.append(Resample.dailyMin());
+        m_daily.append(Resample.dailyMax());
+    }
+}
+
 
 void MainWindow::openDB(bool create)
 {
@@ -140,17 +182,33 @@ void MainWindow::on_queriesDone(QList<QString> queries)
             qDebug()<<"problem exectuing query "<<queries[i];
         }
 
-        m_baseData.append(dates);
+        m_baseDates.append(dates);
         m_baseData.append(values);
+        values.clear();
+        dates.clear();
     }
 
-    Resampler resample(m_baseData[0], m_baseData[1]);
-    resample.dailyMax();
-    resample.dailyMin();
-    resample.dailyMean();
+    qDebug()<<"setting up plot data";
+    setupPlotData();
+    qDebug()<<"plotting data";
+    plot();
 }
 
 void MainWindow::on_siteListReady(QList<QString> sites)
 {
     m_sites = sites;
+}
+
+void MainWindow::clearPlotData()
+{
+    m_dates.clear();
+    m_daily.clear();
+    m_byDay.clear();
+    m_byMonth.clear();
+    m_byYear.clear();
+    m_months.clear();
+    m_days.clear();
+    m_months.clear();
+    m_years.clear();
+    m_datesMinMax.clear();
 }

@@ -50,11 +50,14 @@ private:
     QString m_qsDbPath;
     QString m_qsBaseDir;
     QueryManager m_QueryManager;
-    QList< QVector<double> > m_baseData, m_daily, m_byDay, m_byMonth, m_byYear;
+    QList< QVector<double> > m_baseData, m_baseDates, m_dates, m_daily, m_byDay, m_byMonth, m_byYear;
     QList<QString> m_sites;
+    QVector<double> m_days, m_months, m_years, m_datesMinMax;
 
+    void clearPlotData();
     void setBaseDir(QString path);
     void setDbPath(QString path);
+    void setupPlotData();
     void openDB(bool create);
 };
 
