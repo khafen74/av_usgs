@@ -139,8 +139,8 @@ void dialog_SelectData::on_btn_ok_clicked()
         m_queries.append(query);
     }
 
-    emit queriesDone(m_queries);
     emit siteListReady(m_sites);
+    emit queriesDone(m_queries);
 
     this->close();
 }

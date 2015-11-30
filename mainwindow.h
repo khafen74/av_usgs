@@ -26,6 +26,7 @@ public:
     ~MainWindow();
 
     void plot();
+    void plotMonth();
 
 private slots:
 
@@ -38,6 +39,8 @@ private slots:
     void on_actionConnect_to_Existing_DB_triggered();
 
     void on_btn_select_clicked();
+
+    void on_btn_plot_clicked();
 
 public slots:
 

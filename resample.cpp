@@ -213,7 +213,6 @@ QVector<double> Resampler::dailyMean()
             mean = sum/(count*1.0);
             m_newDates.append(datetime1.toTime_t());
             m_newValues.append(mean);
-            qDebug()<<date1<<mean<<count;
             date1 = date2;
             count = 0;
             sum = 0.0;
@@ -223,7 +222,6 @@ QVector<double> Resampler::dailyMean()
     datetime1.setDate(date1);
     datetime1.setTime(time);
     mean = sum/(count*1.0);
-    qDebug()<<date1<<mean;
     m_newDates.append(datetime1.toTime_t());
     m_newValues.append(mean);
 
@@ -278,6 +276,58 @@ QVector<double> Resampler::meanByMonth()
     }
 
     return avg;
+}
+
+QVector<double> Resampler::maxByMonth()
+{
+    clearAll();
+    QDateTime datetime;
+    int mon, index;
+    QVector<double> max(12);
+    max.fill(0.0);
+
+    for (int i=0; i<m_baseDates.length(); i++)
+    {
+        datetime = QDateTime::fromTime_t(m_baseDates[i]);
+        mon = datetime.date().month();
+        index = m_months.indexOf(mon);
+        if (m_baseValues[i] > max[index])
+        {
+            max[index] = m_baseValues[i];
+        }
+    }
+
+    return max;
+}
+
+QVector<double> Resampler::minByMonth()
+{
+    clearAll();
+    QDateTime datetime;
+    int mon, index;
+    QVector<double> min(12);
+    min.fill(99999999999999);
+
+    for (int i=0; i<m_baseDates.length(); i++)
+    {
+        datetime = QDateTime::fromTime_t(m_baseDates[i]);
+        mon = datetime.date().month();
+        index = m_months.indexOf(mon);
+        if (m_baseValues[i] < min[index])
+        {
+            min[index] = m_baseValues[i];
+        }
+    }
+
+    for (int i=0; i<min.length(); i++)
+    {
+        if (min[i] >= 99999999999999)
+        {
+            min[i] = 0.0;
+        }
+    }
+
+    return min;
 }
 
 void Resampler::init()
