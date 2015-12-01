@@ -6,6 +6,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->plot_main->plotLayout()->insertRow(0);
+    ui->plot_main->plotLayout()->addElement(0,0,new QCPPlotTitle(ui->plot_main, "Plot Area"));
 }
 
 MainWindow::~MainWindow()
@@ -14,12 +16,65 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+int MainWindow::getPlotValueType()
+{
+    int value;
+
+    if (ui->rbtn_mean->isChecked())
+    {
+        value = 0;
+    }
+    else if (ui->rbtn_min->isChecked())
+    {
+        value = 1;
+    }
+    else if (ui->rbtn_max)
+    {
+        value = 2;
+    }
+    else
+    {
+        value = -1;
+    }
+
+    return value;
+}
+
 void MainWindow::plot()
 {
-    qDebug()<<"overall lengths"<<m_dates.length()<<m_daily.length();
+    clearPlot();
 
+    int value = getPlotValueType();
+
+    if (value >= 0)
+    {
+        if (ui->rbtn_day->isChecked())
+        {
+            plotDay(value);
+        }
+        else if (ui->rbtn_month->isChecked())
+        {
+            plotMonth(value);
+        }
+        else if (ui->rbtn_year->isChecked())
+        {
+            plotYear(value);
+        }
+        else
+        {
+            QMessageBox::information(this, "Select Plotting Options", "You have not correctly selected plotting options");
+        }
+    }
+    else
+    {
+        QMessageBox::information(this, "Select Plotting Options", "You have not correctly selected plotting options");
+    }
+}
+
+void MainWindow::plotDay(int value)
+{
     int increment = 3;
-    int offset = 0;
+    int offset = value;
     QVector<int> red, green, blue;
     red.append(242), red.append(50), red.append(5);
     green.append(12), green.append(12), green.append(245);
@@ -31,7 +86,7 @@ void MainWindow::plot()
     ui->plot_main->legend->setVisible(true);
     ui->plot_main->xAxis->setLabel("Date");
     ui->plot_main->yAxis->setLabel("Discharge (cms)");
-    ui->plot_main->plotLayout()->insertRow(0);
+    //ui->plot_main->plotLayout()->insertRow(0);
     ui->plot_main->plotLayout()->addElement(0,0,new QCPPlotTitle(ui->plot_main, "Average Daily Discharge"));
 
     for (int i=0; i<m_dates.length(); i++)
@@ -40,7 +95,6 @@ void MainWindow::plot()
         ui->plot_main->graph(i)->setPen(QPen(QColor(red[i], green[i], blue[i])));
         ui->plot_main->graph(i)->setLineStyle(QCPGraph::lsLine);
         ui->plot_main->graph(i)->setData(m_dates[i], m_daily[offset]);
-        qDebug()<<i<<m_sites.length();
         ui->plot_main->graph(i)->setName(m_sites[i]);
 
         offset += increment;
@@ -52,10 +106,10 @@ void MainWindow::plot()
     ui->plot_main->repaint();
 }
 
-void MainWindow::plotMonth()
+void MainWindow::plotMonth(int value)
 {
     int nIncrement = 3;
-    int nOffset = 0;
+    int nOffset = value;
 
     QVector<int> red, green, blue;
     red.append(242), red.append(50), red.append(5);
@@ -66,7 +120,7 @@ void MainWindow::plotMonth()
     ui->plot_main->xAxis->setTickStep(1);
     ui->plot_main->xAxis->setSubTickCount(0);
     ui->plot_main->xAxis->setPadding(5);
-    ui->plot_main->plotLayout()->insertRow(0);
+    //ui->plot_main->plotLayout()->insertRow(0);
     ui->plot_main->plotLayout()->addElement(0,0,new QCPPlotTitle(ui->plot_main, "Average Monthly Discharge"));
     ui->plot_main->xAxis->setLabel("Month");
     ui->plot_main->yAxis->setLabel("Discharge (cms)");
@@ -86,6 +140,12 @@ void MainWindow::plotMonth()
     ui->plot_main->replot();
     ui->plot_main->update();
     ui->plot_main->repaint();
+}
+
+void MainWindow::plotYear(int value)
+{
+    int nIncrement = 3;
+    int nOffset = value;
 }
 
 void MainWindow::on_tableView_clicked(const QModelIndex &index)
@@ -227,22 +287,20 @@ void MainWindow::on_queriesDone(QList<QString> queries)
         dates.clear();
     }
 
-    qDebug()<<"setting up plot data";
     setupPlotData();
-    qDebug()<<"plotting data";
-    plot();
 }
 
 void MainWindow::on_siteListReady(QList<QString> sites)
 {
     m_sites = sites;
-    qDebug()<<"sites transferred to main = "<<sites.length()<<m_sites.length();
-    m_sites.clear();
-    for (int i=0; i<sites.length(); i++)
-    {
-        m_sites.append(sites[i]);
-    }
-    qDebug()<<m_sites.length();
+}
+
+void MainWindow::clearPlot()
+{
+    ui->plot_main->clearGraphs();
+    ui->plot_main->clearItems();
+    ui->plot_main->clearPlottables();
+    ui->plot_main->plotLayout()->remove(ui->plot_main->plotLayout()->element(0,0));
 }
 
 void MainWindow::clearPlotData()
@@ -261,5 +319,5 @@ void MainWindow::clearPlotData()
 
 void MainWindow::on_btn_plot_clicked()
 {
-
+    plot();
 }

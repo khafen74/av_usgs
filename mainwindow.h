@@ -25,8 +25,11 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    int getPlotValueType();
     void plot();
-    void plotMonth();
+    void plotDay(int value);
+    void plotMonth(int value);
+    void plotYear(int value);
 
 private slots:
 
@@ -57,6 +60,7 @@ private:
     QList<QString> m_sites;
     QVector<double> m_days, m_months, m_years, m_datesMinMax;
 
+    void clearPlot();
     void clearPlotData();
     void setBaseDir(QString path);
     void setDbPath(QString path);
