@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    setColors();
     ui->plot_main->plotLayout()->insertRow(0);
     ui->plot_main->plotLayout()->addElement(0,0,new QCPPlotTitle(ui->plot_main, "Plot Area"));
 }
@@ -14,6 +15,30 @@ MainWindow::~MainWindow()
 {
     m_db.close();
     delete ui;
+}
+
+QString MainWindow::getPlotValueString(int value)
+{
+    QString str;
+
+    if (value == 0)
+    {
+        str = "Average";
+    }
+    else if (value == 1)
+    {
+        str = "Minimum";
+    }
+    else if (value == 2)
+    {
+        str = "Maximum";
+    }
+    else
+    {
+        str = QString::null;
+    }
+
+    return str;
 }
 
 int MainWindow::getPlotValueType()
@@ -28,9 +53,13 @@ int MainWindow::getPlotValueType()
     {
         value = 1;
     }
-    else if (ui->rbtn_max)
+    else if (ui->rbtn_max->isChecked())
     {
         value = 2;
+    }
+    else if (ui->rbtn_doy->isChecked())
+    {
+        value = 3;
     }
     else
     {
@@ -45,20 +74,25 @@ void MainWindow::plot()
     clearPlot();
 
     int value = getPlotValueType();
+    QString str = getPlotValueString(value);
 
     if (value >= 0)
     {
         if (ui->rbtn_day->isChecked())
         {
-            plotDay(value);
+            plotDay(value, str);
         }
         else if (ui->rbtn_month->isChecked())
         {
-            plotMonth(value);
+            plotMonth(value, str);
         }
         else if (ui->rbtn_year->isChecked())
         {
-            plotYear(value);
+            plotYear(value, str);
+        }
+        else if (ui->rbtn_doy->isChecked())
+        {
+            plotDayOfYear(value, str);
         }
         else
         {
@@ -71,14 +105,11 @@ void MainWindow::plot()
     }
 }
 
-void MainWindow::plotDay(int value)
+void MainWindow::plotDay(int value, QString valStr)
 {
     int increment = 3;
     int offset = value;
-    QVector<int> red, green, blue;
-    red.append(242), red.append(50), red.append(5);
-    green.append(12), green.append(12), green.append(245);
-    blue.append(24), blue.append(242), blue.append(5);
+    int maxIterations = m_dates.length();
     ui->plot_main->xAxis->setTickLabelType(QCPAxis::ltDateTime);
     ui->plot_main->xAxis->setAutoTickStep(true);
     ui->plot_main->xAxis->setDateTimeFormat("MM/dd\nyyyy");
@@ -86,10 +117,14 @@ void MainWindow::plotDay(int value)
     ui->plot_main->legend->setVisible(true);
     ui->plot_main->xAxis->setLabel("Date");
     ui->plot_main->yAxis->setLabel("Discharge (cms)");
-    //ui->plot_main->plotLayout()->insertRow(0);
-    ui->plot_main->plotLayout()->addElement(0,0,new QCPPlotTitle(ui->plot_main, "Average Daily Discharge"));
+    ui->plot_main->plotLayout()->addElement(0,0,new QCPPlotTitle(ui->plot_main, valStr + " Discharge (Daily)"));
 
-    for (int i=0; i<m_dates.length(); i++)
+    if (m_dates.length() > 10)
+    {
+        maxIterations = 10;
+    }
+
+    for (int i=0; i<maxIterations; i++)
     {
         ui->plot_main->addGraph();
         ui->plot_main->graph(i)->setPen(QPen(QColor(red[i], green[i], blue[i])));
@@ -106,26 +141,66 @@ void MainWindow::plotDay(int value)
     ui->plot_main->repaint();
 }
 
-void MainWindow::plotMonth(int value)
+void MainWindow::plotDayOfYear(int value, QString valStr)
 {
     int nIncrement = 3;
     int nOffset = value;
+    int maxIterations = m_dates.length();
 
-    QVector<int> red, green, blue;
-    red.append(242), red.append(50), red.append(5);
-    green.append(12), green.append(12), green.append(245);
-    blue.append(24), blue.append(242), blue.append(5);
     ui->plot_main->legend->setVisible(true);
+    ui->plot_main->xAxis->setTickLabelType(QCPAxis::ltNumber);
+    ui->plot_main->xAxis->setAutoTickStep(false);
+    ui->plot_main->xAxis->setTickStep(10);
+    ui->plot_main->xAxis->setSubTickCount(1);
+    ui->plot_main->xAxis->setPadding(5);
+    ui->plot_main->plotLayout()->addElement(0,0,new QCPPlotTitle(ui->plot_main, valStr + " Discharge (By Day of Year)"));
+    ui->plot_main->xAxis->setLabel("Day of Year");
+    ui->plot_main->yAxis->setLabel("Discharge (cms)");
+
+    if (m_dates.length() > 10)
+    {
+        maxIterations = 10;
+    }
+
+    for (int i=0; i<maxIterations; i++)
+    {
+        ui->plot_main->addGraph();
+        ui->plot_main->graph(i)->setPen(QPen(QColor(red[i], green[i], blue[i])));
+        ui->plot_main->graph(i)->setLineStyle(QCPGraph::lsLine);
+        ui->plot_main->graph(i)->setData(m_days, m_byDay[nOffset]);
+        ui->plot_main->graph(i)->setName(m_sites[i]);
+
+        nOffset += nIncrement;
+    }
+
+    ui->plot_main->rescaleAxes();
+    ui->plot_main->replot();
+    ui->plot_main->update();
+    ui->plot_main->repaint();
+}
+
+void MainWindow::plotMonth(int value, QString valStr)
+{
+    int nIncrement = 3;
+    int nOffset = value;
+    int maxIterations = m_dates.length();
+
+    ui->plot_main->legend->setVisible(true);
+    ui->plot_main->xAxis->setTickLabelType(QCPAxis::ltNumber);
     ui->plot_main->xAxis->setAutoTickStep(false);
     ui->plot_main->xAxis->setTickStep(1);
     ui->plot_main->xAxis->setSubTickCount(0);
     ui->plot_main->xAxis->setPadding(5);
-    //ui->plot_main->plotLayout()->insertRow(0);
-    ui->plot_main->plotLayout()->addElement(0,0,new QCPPlotTitle(ui->plot_main, "Average Monthly Discharge"));
+    ui->plot_main->plotLayout()->addElement(0,0,new QCPPlotTitle(ui->plot_main, valStr + " Discharge (By Month)"));
     ui->plot_main->xAxis->setLabel("Month");
     ui->plot_main->yAxis->setLabel("Discharge (cms)");
 
-    for (int i=0; i<(m_byMonth.length()/nIncrement); i++)
+    if (m_dates.length() > 10)
+    {
+        maxIterations = 10;
+    }
+
+    for (int i=0; i<maxIterations; i++)
     {
         ui->plot_main->addGraph();
         ui->plot_main->graph(i)->setPen(QPen(QColor(red[i], green[i], blue[i])));
@@ -142,10 +217,42 @@ void MainWindow::plotMonth(int value)
     ui->plot_main->repaint();
 }
 
-void MainWindow::plotYear(int value)
+void MainWindow::plotYear(int value, QString valStr)
 {
     int nIncrement = 3;
     int nOffset = value;
+    int maxIterations = m_dates.length();
+
+    ui->plot_main->legend->setVisible(true);
+    ui->plot_main->xAxis->setTickLabelType(QCPAxis::ltNumber);
+    ui->plot_main->xAxis->setAutoTickStep(false);
+    ui->plot_main->xAxis->setTickStep(1);
+    ui->plot_main->xAxis->setSubTickCount(0);
+    ui->plot_main->xAxis->setPadding(5);
+    ui->plot_main->plotLayout()->addElement(0,0,new QCPPlotTitle(ui->plot_main, valStr + " Discharge (By Year)"));
+    ui->plot_main->xAxis->setLabel("Month");
+    ui->plot_main->yAxis->setLabel("Discharge (cms)");
+
+    if (m_dates.length() > 10)
+    {
+        maxIterations = 10;
+    }
+
+    for (int i=0; i<maxIterations; i++)
+    {
+        ui->plot_main->addGraph();
+        ui->plot_main->graph(i)->setPen(QPen(QColor(red[i], green[i], blue[i])));
+        ui->plot_main->graph(i)->setLineStyle(QCPGraph::lsLine);
+        ui->plot_main->graph(i)->setData(m_years, m_byYear[nOffset]);
+        ui->plot_main->graph(i)->setName(m_sites[i]);
+
+        nOffset += nIncrement;
+    }
+
+    ui->plot_main->rescaleAxes();
+    ui->plot_main->replot();
+    ui->plot_main->update();
+    ui->plot_main->repaint();
 }
 
 void MainWindow::on_tableView_clicked(const QModelIndex &index)
@@ -202,6 +309,13 @@ void MainWindow::setBaseDir(QString path)
     m_qsBaseDir = path;
 }
 
+void MainWindow::setColors()
+{
+    red.append(242), red.append(50), red.append(5), red.append(0), red.append(250), red.append(250), red.append(2), red.append(238), red.append(62), red.append(156);
+    green.append(12), green.append(12), green.append(245), green.append(0), green.append(155), green.append(246), green.append(250), green.append(2), green.append(148), green.append(25);
+    blue.append(24), blue.append(242), blue.append(5), blue.append(0), blue.append(2), blue.append(2), blue.append(246), blue.append(250), blue.append(59), blue.append(31);
+}
+
 void MainWindow::setDbPath(QString path)
 {
     m_qsDbPath = path;
@@ -209,6 +323,7 @@ void MainWindow::setDbPath(QString path)
 
 void MainWindow::setupPlotData()
 {
+    clearPlot();
     clearPlotData();
 
     m_days = Resampler::getDays();
@@ -227,6 +342,12 @@ void MainWindow::setupPlotData()
         m_byMonth.append(Resample.meanByMonth());
         m_byMonth.append(Resample.minByMonth());
         m_byMonth.append(Resample.maxByMonth());
+        m_byDay.append(Resample.meanByDay());
+        m_byDay.append(Resample.minByDay());
+        m_byDay.append(Resample.maxByDay());
+        m_byYear.append(Resample.meanByYear(m_years));
+        m_byYear.append(Resample.minByYear(m_years));
+        m_byYear.append(Resample.maxByYear(m_years));
     }
 }
 
@@ -260,6 +381,9 @@ void MainWindow::on_queriesDone(QList<QString> queries)
 {
     QSqlQuery query;
     QVector<double> dates, values;
+
+    m_baseDates.clear();
+    m_baseData.clear();
 
     double value, dateMsecs;
 
@@ -301,6 +425,9 @@ void MainWindow::clearPlot()
     ui->plot_main->clearItems();
     ui->plot_main->clearPlottables();
     ui->plot_main->plotLayout()->remove(ui->plot_main->plotLayout()->element(0,0));
+    ui->plot_main->replot();
+    ui->plot_main->update();
+    ui->plot_main->repaint();
 }
 
 void MainWindow::clearPlotData()

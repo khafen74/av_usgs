@@ -278,6 +278,53 @@ QVector<double> Resampler::meanByMonth()
     return avg;
 }
 
+QVector<double> Resampler::meanByYear(QVector<double> years)
+{
+    clearAll();
+    QDateTime datetime;
+    int year, index;
+    QVector<double> count(years.length()), sum(years.length()), avg;
+    count.fill(0.0);
+    sum.fill(0.0);
+
+    for (int i=0; i<m_baseDates.length(); i++)
+    {
+        datetime = QDateTime::fromTime_t(m_baseDates[i]);
+        year = datetime.date().year();
+        index = years.indexOf(year);
+        sum[index]+=m_baseValues[i];
+        count[index]+=1.0;
+    }
+    for (int i=0; i<count.length(); i++)
+    {
+        avg.append(sum[i]/count[i]);
+    }
+
+    return avg;
+}
+
+QVector<double> Resampler::maxByDay()
+{
+    clearAll();
+    QDateTime datetime;
+    int doy, index;
+    QVector<double> max(366);
+    max.fill(0.0);
+
+    for (int i=0; i<m_baseDates.length(); i++)
+    {
+        datetime = QDateTime::fromTime_t(m_baseDates[i]);
+        doy = datetime.date().dayOfYear();
+        index = m_dayOfYear.indexOf(doy);
+        if (m_baseValues[i] > max[index])
+        {
+            max[index] = m_baseValues[i];
+        }
+    }
+
+    return max;
+}
+
 QVector<double> Resampler::maxByMonth()
 {
     clearAll();
@@ -300,6 +347,58 @@ QVector<double> Resampler::maxByMonth()
     return max;
 }
 
+QVector<double> Resampler::maxByYear(QVector<double> years)
+{
+    clearAll();
+    QDateTime datetime;
+    int year, index;
+    QVector<double> max(years.length());
+    max.fill(0.0);
+
+    for (int i=0; i<m_baseDates.length(); i++)
+    {
+        datetime = QDateTime::fromTime_t(m_baseDates[i]);
+        year = datetime.date().year();
+        index = years.indexOf(year);
+        if (m_baseValues[i] > max[index])
+        {
+            max[index] = m_baseValues[i];
+        }
+    }
+
+    return max;
+}
+
+QVector<double> Resampler::minByDay()
+{
+    clearAll();
+    QDateTime datetime;
+    int doy, index;
+    QVector<double> min(366);
+    min.fill(99999999999999);
+
+    for (int i=0; i<m_baseDates.length(); i++)
+    {
+        datetime = QDateTime::fromTime_t(m_baseDates[i]);
+        doy = datetime.date().dayOfYear();
+        index = m_dayOfYear.indexOf(doy);
+        if (m_baseValues[i] < min[index])
+        {
+            min[index] = m_baseValues[i];
+        }
+    }
+
+    for (int i=0; i<min.length(); i++)
+    {
+        if (min[i] >= 99999999999999)
+        {
+            min[i] = 0.0;
+        }
+    }
+
+    return min;
+}
+
 QVector<double> Resampler::minByMonth()
 {
     clearAll();
@@ -313,6 +412,36 @@ QVector<double> Resampler::minByMonth()
         datetime = QDateTime::fromTime_t(m_baseDates[i]);
         mon = datetime.date().month();
         index = m_months.indexOf(mon);
+        if (m_baseValues[i] < min[index])
+        {
+            min[index] = m_baseValues[i];
+        }
+    }
+
+    for (int i=0; i<min.length(); i++)
+    {
+        if (min[i] >= 99999999999999)
+        {
+            min[i] = 0.0;
+        }
+    }
+
+    return min;
+}
+
+QVector<double> Resampler::minByYear(QVector<double> years)
+{
+    clearAll();
+    QDateTime datetime;
+    int year, index;
+    QVector<double> min(years.length());
+    min.fill(99999999999999);
+
+    for (int i=0; i<m_baseDates.length(); i++)
+    {
+        datetime = QDateTime::fromTime_t(m_baseDates[i]);
+        year = datetime.date().year();
+        index = years.indexOf(year);
         if (m_baseValues[i] < min[index])
         {
             min[index] = m_baseValues[i];

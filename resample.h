@@ -25,13 +25,13 @@ public:
     QVector<double> dailyMean();
     QVector<double> meanByDay();
     QVector<double> meanByMonth();
-    QVector<double> meanByYear();
+    QVector<double> meanByYear(QVector<double> years);
     QVector<double> maxByDay();
     QVector<double> maxByMonth();
-    QVector<double> maxByYear();
+    QVector<double> maxByYear(QVector<double> years);
     QVector<double> minByDay();
     QVector<double> minByMonth();
-    QVector<double> minByYear();
+    QVector<double> minByYear(QVector<double> years);
 
 private:
     QVector<double> m_baseDates, m_baseValues, m_dayOfYear, m_months;

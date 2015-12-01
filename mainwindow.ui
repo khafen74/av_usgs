@@ -91,7 +91,7 @@
      <rect>
       <x>430</x>
       <y>10</y>
-      <width>172</width>
+      <width>258</width>
       <height>50</height>
      </rect>
     </property>
@@ -114,6 +114,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QRadioButton" name="rbtn_doy">
+       <property name="text">
+        <string>Day of Year</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QRadioButton" name="rbtn_day">
        <property name="text">
         <string>Day</string>
@@ -125,8 +132,8 @@
    <widget class="QPushButton" name="btn_plot">
     <property name="geometry">
      <rect>
-      <x>640</x>
-      <y>20</y>
+      <x>700</x>
+      <y>30</y>
       <width>75</width>
       <height>23</height>
      </rect>
