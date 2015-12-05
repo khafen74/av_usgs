@@ -165,7 +165,7 @@ void dialog_LoadData::loadDataValues()
 
     for (int i=0; i<m_filenames.length(); i++)
     {
-        qDebug()<<"reading file"<<m_filenames[i]<<m_filenames.length()<<m_type.length()<<m_site.length();
+        qDebug()<<"reading file"<<m_filenames[i]<<m_type[i];
         QryManage.readValues(m_filenames[i], m_type[i], m_site[i]);
     }
 
