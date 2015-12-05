@@ -172,6 +172,7 @@ void QueryManager::readSitesFile(QString filename, QString state)
 
 void QueryManager::loadValues(QStringList list, QString site, QString type)
 {
+
     QDateTime local, utc;
     double q;
     int qid;
@@ -187,7 +188,7 @@ void QueryManager::loadValues(QStringList list, QString site, QString type)
         utc = local.addSecs(offsetUTC*3600);
         quality = list[5];
         q = list[4].toDouble();
-        //qDebug()<<"load instant values"<<offset<<local<<utc<<quality<<q;
+        //qDebug()<<"load instant values"<<offset<<local<<utc<<quality<<q<<type;
     }
     else
     {
@@ -198,7 +199,6 @@ void QueryManager::loadValues(QStringList list, QString site, QString type)
         quality = list[4];
         q = list[3].toDouble();
     }
-
     qid = getQualityControlLevelID(quality);
 
     QSqlQuery qry;

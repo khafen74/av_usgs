@@ -18,6 +18,7 @@ public:
 
 private:
     QString m_qsUrlBase;
+    QString m_qsIvBase;
     QString m_qsFormat;
     QString m_qsSiteType;
     QString m_qsDataType;

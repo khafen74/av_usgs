@@ -116,7 +116,7 @@ void MainWindow::plotDay(int value, QString valStr)
     ui->plot_main->xAxis->setPadding(5);
     ui->plot_main->legend->setVisible(true);
     ui->plot_main->xAxis->setLabel("Date");
-    ui->plot_main->yAxis->setLabel("Discharge (cms)");
+    ui->plot_main->yAxis->setLabel("Discharge (cfs)");
     ui->plot_main->plotLayout()->addElement(0,0,new QCPPlotTitle(ui->plot_main, valStr + " Discharge (Daily)"));
 
     if (m_dates.length() > 10)
@@ -155,7 +155,7 @@ void MainWindow::plotDayOfYear(int value, QString valStr)
     ui->plot_main->xAxis->setPadding(5);
     ui->plot_main->plotLayout()->addElement(0,0,new QCPPlotTitle(ui->plot_main, valStr + " Discharge (By Day of Year)"));
     ui->plot_main->xAxis->setLabel("Day of Year");
-    ui->plot_main->yAxis->setLabel("Discharge (cms)");
+    ui->plot_main->yAxis->setLabel("Discharge (cfs)");
 
     if (m_dates.length() > 10)
     {
@@ -193,7 +193,7 @@ void MainWindow::plotMonth(int value, QString valStr)
     ui->plot_main->xAxis->setPadding(5);
     ui->plot_main->plotLayout()->addElement(0,0,new QCPPlotTitle(ui->plot_main, valStr + " Discharge (By Month)"));
     ui->plot_main->xAxis->setLabel("Month");
-    ui->plot_main->yAxis->setLabel("Discharge (cms)");
+    ui->plot_main->yAxis->setLabel("Discharge (cfs)");
 
     if (m_dates.length() > 10)
     {
@@ -230,8 +230,9 @@ void MainWindow::plotYear(int value, QString valStr)
     ui->plot_main->xAxis->setSubTickCount(0);
     ui->plot_main->xAxis->setPadding(5);
     ui->plot_main->plotLayout()->addElement(0,0,new QCPPlotTitle(ui->plot_main, valStr + " Discharge (By Year)"));
-    ui->plot_main->xAxis->setLabel("Month");
-    ui->plot_main->yAxis->setLabel("Discharge (cms)");
+    ui->plot_main->xAxis->setLabel("Year");
+    ui->plot_main->xAxis->setRange(0.0,366.0);
+    ui->plot_main->yAxis->setLabel("Discharge (cfs)");
 
     if (m_dates.length() > 10)
     {
