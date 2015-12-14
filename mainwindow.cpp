@@ -118,6 +118,11 @@ void MainWindow::plotDay(int value, QString valStr)
     ui->plot_main->xAxis->setLabel("Date");
     ui->plot_main->yAxis->setLabel("Discharge (cfs)");
     ui->plot_main->plotLayout()->addElement(0,0,new QCPPlotTitle(ui->plot_main, valStr + " Discharge (Daily)"));
+    ui->plot_main->legend->setFont(QFont(font().family(), 12));
+    ui->plot_main->xAxis->setLabelFont(QFont(font().family(), 12));
+    ui->plot_main->yAxis->setLabelFont(QFont(font().family(), 12));
+    ui->plot_main->xAxis->setTickLabelFont(QFont(font().family(), 10));
+    ui->plot_main->yAxis->setTickLabelFont(QFont(font().family(), 10));
 
     if (m_dates.length() > 10)
     {
@@ -156,6 +161,11 @@ void MainWindow::plotDayOfYear(int value, QString valStr)
     ui->plot_main->plotLayout()->addElement(0,0,new QCPPlotTitle(ui->plot_main, valStr + " Discharge (By Day of Year)"));
     ui->plot_main->xAxis->setLabel("Day of Year");
     ui->plot_main->yAxis->setLabel("Discharge (cfs)");
+    ui->plot_main->legend->setFont(QFont(font().family(), 12));
+    ui->plot_main->xAxis->setLabelFont(QFont(font().family(), 12));
+    ui->plot_main->yAxis->setLabelFont(QFont(font().family(), 12));
+    ui->plot_main->xAxis->setTickLabelFont(QFont(font().family(), 10));
+    ui->plot_main->yAxis->setTickLabelFont(QFont(font().family(), 10));
 
     if (m_dates.length() > 10)
     {
@@ -194,7 +204,11 @@ void MainWindow::plotMonth(int value, QString valStr)
     ui->plot_main->plotLayout()->addElement(0,0,new QCPPlotTitle(ui->plot_main, valStr + " Discharge (By Month)"));
     ui->plot_main->xAxis->setLabel("Month");
     ui->plot_main->yAxis->setLabel("Discharge (cfs)");
-
+    ui->plot_main->legend->setFont(QFont(font().family(), 12));
+    ui->plot_main->xAxis->setLabelFont(QFont(font().family(), 12));
+    ui->plot_main->yAxis->setLabelFont(QFont(font().family(), 12));
+    ui->plot_main->xAxis->setTickLabelFont(QFont(font().family(), 10));
+    ui->plot_main->yAxis->setTickLabelFont(QFont(font().family(), 10));
     if (m_dates.length() > 10)
     {
         maxIterations = 10;
@@ -233,6 +247,11 @@ void MainWindow::plotYear(int value, QString valStr)
     ui->plot_main->xAxis->setLabel("Year");
     ui->plot_main->xAxis->setRange(0.0,366.0);
     ui->plot_main->yAxis->setLabel("Discharge (cfs)");
+    ui->plot_main->legend->setFont(QFont(font().family(), 12));
+    ui->plot_main->xAxis->setLabelFont(QFont(font().family(), 12));
+    ui->plot_main->yAxis->setLabelFont(QFont(font().family(), 12));
+    ui->plot_main->xAxis->setTickLabelFont(QFont(font().family(), 10));
+    ui->plot_main->yAxis->setTickLabelFont(QFont(font().family(), 10));
 
     if (m_dates.length() > 10)
     {
